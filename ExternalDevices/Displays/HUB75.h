@@ -25,5 +25,9 @@ public:
     void setup() override;
     void display() override;
 
-    void setPixel(int16_t x, int16_t y, uint32_t color) override;
+    uint16_t width() override;
+    uint16_t height() override;
+
+    void setPixel(uint16_t x, uint16_t y, uint32_t color) override;
+    void fill(uint32_t color) override;
 };
