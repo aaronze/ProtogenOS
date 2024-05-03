@@ -7,6 +7,8 @@ public:
 
     float x, y, z;
 
+    float length() const;
+    Vector3D normalize();
     Vector3D cross(const Vector3D& vector) const;
     float dot(const Vector3D& vector) const;
 

@@ -1,4 +1,17 @@
 #include "Vector3D.h"
+#include <math.h>
+
+float Vector3D::length() const {
+    return sqrtf(x * x + y * y + z * z);
+}
+
+Vector3D Vector3D::normalize() {
+    float length = this->length();
+    x /= length;
+    y /= length;
+    z /= length;
+    return *this;
+}
 
 Vector3D Vector3D::cross(const Vector3D &vector) const {
     return {

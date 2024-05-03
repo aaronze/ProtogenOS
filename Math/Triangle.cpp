@@ -13,6 +13,7 @@ Triangle::Triangle(Vector3D v1, Vector3D v2, Vector3D v3) {
 
     this->edge1 = v2 - v1;
     this->edge2 = v3 - v1;
+    this->normal = edge1.cross(edge2).normalize();
 }
 
 bool Triangle::intersects(Vector3D rayOrigin, Vector3D rayDirection, Vector3D *outIntersection, Vector2D *outColor) {

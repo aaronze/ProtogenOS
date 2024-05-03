@@ -15,6 +15,7 @@ public:
 
     Vector3D edge1;
     Vector3D edge2;
+    Vector3D normal;
 
     Triangle(Vector3D v1, Vector3D v2, Vector3D v3);
 
