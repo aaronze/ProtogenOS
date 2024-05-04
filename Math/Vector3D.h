@@ -11,6 +11,7 @@ public:
     Vector3D normalize();
     Vector3D cross(const Vector3D& vector) const;
     float dot(const Vector3D& vector) const;
+    Vector3D clone() const;
 
     bool operator ==(const Vector3D& vector) const;
     bool operator !=(const Vector3D& vector) const;

@@ -1,13 +1,13 @@
 #include "Object.h"
 
-void Object::addTriangle(const TrianglePtr &triangle) {
-    triangles.push_back(triangle);
+void Object::setMaterial(IMaterial* material) {
+    this->material = material;
 }
 
-const std::vector<TrianglePtr>& Object::getTriangles() const {
-    return triangles;
-}
-
-Material *const Object::getMaterial() const {
+IMaterial* Object::getMaterial() const {
     return material;
+}
+
+Mesh* Object::getMesh() const {
+    return mesh;
 }

@@ -25,6 +25,10 @@ float Vector3D::dot(const Vector3D &vector) const {
     return (x * vector.x) + (y * vector.y) + (z * vector.z);
 }
 
+Vector3D Vector3D::clone() const {
+    return Vector3D({x, y, z});
+}
+
 bool Vector3D::operator ==(const Vector3D& vector) const {
     return x == vector.x && y == vector.y && z == vector.z;
 }

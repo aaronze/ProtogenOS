@@ -29,5 +29,6 @@ public:
     uint16_t height() override;
 
     void setPixel(uint16_t x, uint16_t y, uint32_t color) override;
+    void drawString(uint16_t x, uint16_t y, uint32_t color, const char string[]) override;
     void fill(uint32_t color) override;
 };

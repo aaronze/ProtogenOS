@@ -1,21 +1,17 @@
 #pragma once
 
-#include <vector>
-#include <memory>
-#include "Math/Triangle.h"
-#include "Rendering/Materials/Material.h"
-
-using TrianglePtr = std::shared_ptr<Triangle>;
+#include "Rendering/Materials/IMaterial.h"
+#include "Rendering/Mesh.h"
 
 class Object {
 private:
-    std::vector<TrianglePtr> triangles;
-    Material* material;
+    Mesh* mesh;
+    IMaterial* material;
 
 public:
-    explicit Object(Material* material) : material(material) {};
+    explicit Object(Mesh* mesh, IMaterial* material) : mesh(mesh), material(material) {};
 
-    void addTriangle(const TrianglePtr& triangle);
-    const std::vector<TrianglePtr>& getTriangles() const;
-    Material *const getMaterial() const;
+    void setMaterial(IMaterial* material);
+    IMaterial* getMaterial() const;
+    Mesh* getMesh() const;
 };
