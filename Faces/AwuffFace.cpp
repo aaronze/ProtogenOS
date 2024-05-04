@@ -8,7 +8,7 @@ AwuffFace::AwuffFace() {
     std::vector<Vector3D> vertexList (std::begin(vertices), std::end(vertices));
     std::vector<uint32_t> indexList (std::begin(indexes), std::end(indexes));
 
-    material = new SolidMaterial(0xFFFF00);
+    material = new SolidMaterial(0xFF00FF);
     mesh = new Mesh(vertexList, indexList);
     object = new Object(mesh, material);
 }

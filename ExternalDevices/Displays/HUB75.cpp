@@ -22,7 +22,7 @@ void HUB75::setup() {
 }
 
 void HUB75::display() {
-    backgroundLayer.swapBuffers(false);
+    backgroundLayer.swapBuffers();
 }
 
 uint16_t HUB75::width() {
@@ -39,6 +39,10 @@ void HUB75::setPixel(uint16_t x, uint16_t y, uint32_t color) {
 
 void HUB75::fill(uint32_t color) {
     backgroundLayer.fillScreen(colorToRGB(color));
+}
+
+void HUB75::clear() {
+    backgroundLayer.fillScreen(colorToRGB(0));
 }
 
 void HUB75::drawString(uint16_t x, uint16_t y, uint32_t color, const char string[]) {

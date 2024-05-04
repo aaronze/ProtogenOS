@@ -14,10 +14,13 @@ void Renderer::render() {
     auto triangles = object->getMesh()->getTriangles();
     auto width = panel_->width();
     auto height = panel_->height();
+    auto wiggle = face.getWiggle(2.0f);
+
+    panel_->clear();
 
     for (uint16_t y = 0; y < height; y++) {
         for (uint16_t x = 0; x < width; x++) {
-            Vector3D rayOrigin((float)x - width/2, (float)y - height/2, -100.0f);
+            Vector3D rayOrigin((float)x - width/2 + wiggle.x, (float)y - height/2 + wiggle.y, -100.0f);
             Vector3D rayDirection(0, 0, 1.0f);
 
             Vector3D intersection;
