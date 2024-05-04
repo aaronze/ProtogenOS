@@ -7,7 +7,21 @@ private:
     Vector3D position;
 
 public:
-    void translate(const Vector3D translation);
+    Vector3D getPosition() {
+        return position;
+    }
 
-    void apply(Vector3D& vector) const;
+    void translate(const Vector3D translation) {
+        position = translation;
+    }
+
+    void apply(Vector3D& vector) const {
+        vector += position;
+    }
+
+    Vector3D transform(Vector3D vector) const {
+        auto vec = vector.clone();
+        apply(vec);
+        return vec;
+    }
 };

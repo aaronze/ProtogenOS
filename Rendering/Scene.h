@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <vector>
 #include "Object.h"
 
@@ -20,6 +21,10 @@ public:
 
     void addObject(Object* obj) {
         objects.push_back(obj);
+    }
+
+    void removeObject(Object* obj) {
+        objects.erase(std::remove(objects.begin(), objects.end(), obj), objects.end());
     }
 
     std::vector<Object*> getObjects() {

@@ -28,7 +28,7 @@ public:
     void update() override {
         getMesh()->restore();
 
-        auto wiggle = getWiggle(2.0f);
+        auto wiggle = getWiggle(2.5f);
         getTransform().translate({wiggle.x, wiggle.y, 0});
         getMesh()->applyTransform(getTransform());
     }

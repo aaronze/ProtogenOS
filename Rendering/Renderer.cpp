@@ -21,6 +21,8 @@ void Renderer::render(Scene* scene) {
             Vector3D intersection;
             Vector2D color;
             for (auto& object : objects) {
+                if (!object->getMesh()->getBoundingBox()->intersects(rayOrigin, rayDirection)) continue;
+
                 for (auto &triangle: object->getMesh()->getTriangles()) {
                     if (triangle->intersects(rayOrigin, rayDirection, &intersection, &color)) {
                         panel_->setPixel(width - x - 1, y, object->getMaterial()->getColor(

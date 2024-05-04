@@ -13,9 +13,12 @@ private:
 public:
     Object() = default;
     Object(Mesh* mesh, IMaterial* material) : mesh(mesh), material(material) {}
-    ~Object();
+    virtual ~Object();
 
-    virtual void update() {}
+    virtual void update() {
+        mesh->restore();
+        mesh->applyTransform(transform);
+    }
 
     void setMaterial(IMaterial* material);
     IMaterial* getMaterial() const;
