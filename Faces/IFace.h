@@ -3,12 +3,8 @@
 #include <Arduino.h>
 #include "Rendering/Object.h"
 
-class IFace {
-public:
-    virtual ~IFace() = default;
-
-    virtual Object* getObject() const = 0;
-
+class IFace : public Object {
+private:
     Vector2D getWiggle(float amplitude = 5.0f) {
         auto xPeriod = 5.3f / amplitude;
         auto yPeriod = 6.7f / amplitude;
@@ -23,6 +19,17 @@ public:
         xWave = min(max(xWave, -2.0f), 2.0f);
         yWave = min(max(yWave, -2.0f), 2.0f);
 
-        return Vector2D(xWave, yWave);
+        return {xWave, yWave};
+    }
+
+public:
+    virtual ~IFace() = default;
+
+    void update() override {
+        getMesh()->restore();
+
+        auto wiggle = getWiggle(2.0f);
+        getTransform().translate({wiggle.x, wiggle.y, 0});
+        getMesh()->applyTransform(getTransform());
     }
 };

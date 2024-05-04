@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "ExternalDevices/Displays/IPanel.h"
+#include "Rendering/Scene.h"
 
 class Renderer {
 private:
@@ -12,5 +13,5 @@ public:
         : panel_(std::move(panel)) {}
 
     void setup();
-    void render();
+    void render(Scene* scene);
 };

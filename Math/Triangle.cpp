@@ -2,7 +2,7 @@
 
 #define EPSILON 0.0000001
 
-Triangle::Triangle(Vector3D v1, Vector3D v2, Vector3D v3) {
+Triangle::Triangle(Vector3D* v1, Vector3D* v2, Vector3D* v3) {
     this->v1 = v1;
     this->v2 = v2;
     this->v3 = v3;
@@ -11,8 +11,8 @@ Triangle::Triangle(Vector3D v1, Vector3D v2, Vector3D v3) {
     this->uv2 = {1, 0};
     this->uv3 = {0, 1};
 
-    this->edge1 = v2 - v1;
-    this->edge2 = v3 - v1;
+    this->edge1 = *v2 - *v1;
+    this->edge2 = *v3 - *v1;
     this->normal = edge1.cross(edge2).normalize();
 }
 
@@ -22,7 +22,7 @@ bool Triangle::intersects(Vector3D rayOrigin, Vector3D rayDirection, Vector3D *o
     if (a > -EPSILON && a < EPSILON) return false; // Parallel
 
     float f = 1.0f / a;
-    Vector3D s = rayOrigin - v1;
+    Vector3D s = rayOrigin - *v1;
     float u = f * s.dot(h);
     if (u < 0.0f || u > 1.0f) return false;
 

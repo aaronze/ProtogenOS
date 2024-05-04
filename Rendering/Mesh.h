@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include "Math/Transform.h"
 #include "Math/Triangle.h"
 #include "Math/Vector3D.h"
 
@@ -15,9 +16,10 @@ private:
     std::vector<Vector3D> vertices;
 
 public:
-    Mesh() {};
+    Mesh() = default;
     Mesh(std::vector<Vector3D> vertices, std::vector<uint32_t> indexes);
 
     void restore();
+    void applyTransform(Transform& transform);
     std::vector<TrianglePtr> getTriangles();
 };
