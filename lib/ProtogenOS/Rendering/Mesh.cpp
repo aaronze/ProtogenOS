@@ -55,6 +55,6 @@ BoundingBox* Mesh::getBoundingBox() {
 
 void Mesh::applyMorph(std::vector<unsigned int> morphIndexes, std::vector<float> morphVertices, float weight) {
     for (size_t i = 0; i < morphIndexes.size(); i++) {
-        vertices[morphIndexes[i]].add(morphVertices[i*3], morphVertices[i*3+1], morphVertices[i*3+2]);
+        vertices[morphIndexes[i]].add(morphVertices[i*3] * weight, morphVertices[i*3+1] * weight, morphVertices[i*3+2] * weight);
     }
 }

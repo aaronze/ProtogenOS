@@ -17,6 +17,8 @@ private:
     std::unordered_map<Morph, std::vector<unsigned int>> morphIndexes;
     std::unordered_map<Morph, std::vector<float>> morphVertices;
     std::unordered_map<Morph, float> morphWeights;
+    std::unordered_map<Morph, float> morphTargets;
+    std::unordered_map<Morph, float> morphSpeeds;
 
     Vector2D getWiggle(float amplitude = 5.0f) {
         auto xPeriod = 5.3f / amplitude;
@@ -36,12 +38,13 @@ private:
     }
 
 protected:
-    void addMorph(Morph morph, unsigned int count, unsigned int indexes[], float vertices[]) {
+    void addMorph(Morph morph, unsigned int count, unsigned int indexes[], float vertices[], float morphSpeed = 0.1f) {
         std::vector<unsigned int> indexList (indexes, indexes + count);
         std::vector<float> vertexList (vertices, vertices + count * 3);
 
         morphIndexes[morph] = indexList;
         morphVertices[morph] = vertexList;
+        morphSpeeds[morph] = morphSpeed;
     }
 
 public:
@@ -49,6 +52,18 @@ public:
 
     void update() override {
         getMesh()->reset();
+
+        for (const auto& morphTarget : morphTargets) {
+            Morph morph = morphTarget.first;
+            float target = morphTarget.second;
+
+            if (morphWeights[morph] < target) {
+                morphWeights[morph] += morphSpeeds[morph];
+            }
+            if (morphWeights[morph] > target) {
+                morphWeights[morph] -= morphSpeeds[morph];
+            }
+        }
 
         for (const auto& morphWeight : morphWeights) {
             Morph morph = morphWeight.first;
@@ -70,6 +85,6 @@ public:
     }
 
     void morph(Morph morph, float weight = 1.0f) {
-        morphWeights[morph] = weight;
+        morphTargets[morph] = weight;
     }
 };

@@ -15,6 +15,7 @@ IEffect* effect;
 ButtonHandler buttonHandler(23);
 
 unsigned long previousMillis;
+unsigned long blinkCooldown = 30;
 
 void setup() {
     previousMillis = millis();
@@ -28,6 +29,15 @@ void loop() {
     auto time = millis();
     auto delta = time - previousMillis;
     previousMillis = time;
+
+    if (blinkCooldown == 0 && rand() % 100 == 1) {
+        face.morph(Morph::Blink, 1.0f);
+        blinkCooldown = 30;
+    }
+    if (blinkCooldown > 0) {
+        if (blinkCooldown < 25) face.morph(Morph::Blink, 0.0f);
+        blinkCooldown--;
+    }
 
     if (buttonHandler.update()) {
         face.reset();
