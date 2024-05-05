@@ -16,7 +16,7 @@ public:
     virtual ~Object();
 
     virtual void update() {
-        mesh->restore();
+        mesh->reset();
         mesh->applyTransform(transform);
     }
 

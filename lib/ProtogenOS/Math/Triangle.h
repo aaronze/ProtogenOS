@@ -13,11 +13,9 @@ public:
     Vector2D uv2;
     Vector2D uv3;
 
-    Vector3D edge1;
-    Vector3D edge2;
     Vector3D normal;
 
     Triangle(Vector3D* v1, Vector3D* v2, Vector3D* v3);
 
-    bool intersects(Vector3D rayOrigin, Vector3D rayDirection, Vector3D* outIntersection, Vector2D* outColor);
+    bool intersects(Vector3D rayOrigin, Vector3D rayDirection, Vector3D* outIntersection, Vector2D* outColor) const;
 };

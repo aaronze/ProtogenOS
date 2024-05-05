@@ -30,6 +30,9 @@ void loop() {
     previousMillis = time;
 
     if (buttonHandler.update()) {
+        face.reset();
+        face.morph(Morph::Love);
+
         delete effect;
         effect = new HeartBubbles(&scene, 20);
     }

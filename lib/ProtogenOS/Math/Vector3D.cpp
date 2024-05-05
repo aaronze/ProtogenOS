@@ -29,6 +29,12 @@ Vector3D Vector3D::clone() const {
     return Vector3D({x, y, z});
 }
 
+void Vector3D::add(float x, float y, float z) {
+    this->x += x;
+    this->y += y;
+    this->z += z;
+}
+
 bool Vector3D::operator ==(const Vector3D& vector) const {
     return x == vector.x && y == vector.y && z == vector.z;
 }
@@ -37,17 +43,10 @@ bool Vector3D::operator !=(const Vector3D& vector) const {
     return x != vector.x || y != vector.y || z != vector.z;
 }
 
-Vector3D Vector3D::operator +=(const Vector3D& vector) {
+Vector3D& Vector3D::operator +=(const Vector3D& vector) {
     x += vector.x;
     y += vector.y;
     z += vector.z;
-    return *this;
-}
-
-Vector3D Vector3D::operator =(const Vector3D& vector) {
-    x = vector.x;
-    y = vector.y;
-    z = vector.z;
     return *this;
 }
 

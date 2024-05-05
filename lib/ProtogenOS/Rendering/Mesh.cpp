@@ -32,7 +32,7 @@ Mesh::~Mesh() {
     delete boundingBox;
 }
 
-void Mesh::restore() {
+void Mesh::reset() {
     for (size_t i = 0; i < originalVertices.size(); i++) {
         vertices[i] = originalVertices[i];
     }
@@ -40,8 +40,8 @@ void Mesh::restore() {
 
 void Mesh::applyTransform(Transform& transform) {
     boundingBox->applyTransform(&transform);
-    for (size_t i = 0; i < originalVertices.size(); i++) {
-        transform.apply(vertices[i]);
+    for (auto& vertex : vertices) {
+        transform.apply(vertex);
     }
 }
 
@@ -51,4 +51,10 @@ std::vector<TrianglePtr> Mesh::getTriangles() {
 
 BoundingBox* Mesh::getBoundingBox() {
     return boundingBox;
+}
+
+void Mesh::applyMorph(std::vector<unsigned int> morphIndexes, std::vector<float> morphVertices, float weight) {
+    for (size_t i = 0; i < morphIndexes.size(); i++) {
+        vertices[morphIndexes[i]].add(morphVertices[i*3], morphVertices[i*3+1], morphVertices[i*3+2]);
+    }
 }

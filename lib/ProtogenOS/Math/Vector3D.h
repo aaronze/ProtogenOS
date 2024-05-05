@@ -12,11 +12,12 @@ public:
     Vector3D cross(const Vector3D& vector) const;
     float dot(const Vector3D& vector) const;
     Vector3D clone() const;
+    void add(float x, float y, float z);
 
     bool operator ==(const Vector3D& vector) const;
     bool operator !=(const Vector3D& vector) const;
-    Vector3D operator +=(const Vector3D& vector);
-    Vector3D operator =(const Vector3D& vector);
+    Vector3D& operator +=(const Vector3D& vector);
+    Vector3D& operator =(const Vector3D& vector) = default;
     Vector3D operator +(const Vector3D& vector) const;
     Vector3D operator -(const Vector3D& vector) const;
     float operator *(const Vector3D& vector) const;

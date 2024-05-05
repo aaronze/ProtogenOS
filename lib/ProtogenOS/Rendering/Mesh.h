@@ -22,8 +22,9 @@ public:
     Mesh(std::vector<Vector3D> vertices, std::vector<uint32_t> indexes);
     ~Mesh();
 
-    void restore();
+    void reset();
     void applyTransform(Transform& transform);
+    void applyMorph(std::vector<unsigned int> indexes, std::vector<float> morphVertices, float weight);
     std::vector<TrianglePtr> getTriangles();
     BoundingBox* getBoundingBox();
 };
