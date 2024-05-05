@@ -54,7 +54,7 @@ void loop() {
             face.morph(Morph::HideBlush);
             face.morph(Morph::Sad);
             delete effect;
-            effect = new Crying(&scene, 6);
+            effect = new Crying(&scene, Vector3D(-12, 9, 0), 6);
         } else {
             face.reset();
             face.morph(Morph::HideBlush);
