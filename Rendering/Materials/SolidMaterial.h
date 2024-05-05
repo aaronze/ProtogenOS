@@ -9,5 +9,7 @@ private:
 public:
     explicit SolidMaterial(unsigned color) : color(color) {};
 
-    uint32_t getColor(const Vector3D &position, const Vector3D &normal, const Vector2D &uv) override;
+    uint32_t getColor(const Vector3D &position, const Vector3D &normal, const Vector2D &uv) override {
+        return color;
+    }
 };

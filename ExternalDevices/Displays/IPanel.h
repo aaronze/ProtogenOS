@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 class IPanel {
 public:
     virtual ~IPanel() = default;
@@ -13,5 +15,5 @@ public:
     virtual void setPixel(uint16_t x, uint16_t y, uint32_t color) = 0;
     virtual void clear() = 0;
     virtual void fill(uint32_t color) = 0;
-    virtual void drawString(uint16_t x, uint16_t y, uint32_t color, const char string[]) = 0;
+    virtual void drawString(uint16_t x, uint16_t y, uint32_t color, std::string string) = 0;
 };

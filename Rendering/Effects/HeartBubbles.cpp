@@ -1,6 +1,6 @@
 #include "HeartBubbles.h"
 
-HeartBubbles::HeartBubbles(Scene* scene, int numberOfHearts) {
+HeartBubbles::HeartBubbles(Scene* scene, unsigned int numberOfHearts, unsigned long duration) : IEffect(duration) {
     this->scene = scene;
 
     for (int i = 0; i < numberOfHearts; i++) {
@@ -24,9 +24,9 @@ HeartBubbles::~HeartBubbles() {
     hearts.clear();
 }
 
-void HeartBubbles::update() {
+void HeartBubbles::update(unsigned long delta) {
     for (auto heart : hearts) {
         auto position = heart->getTransform().getPosition();
-        heart->getTransform().translate(Vector3D(position.x, position.y - 1, 0));
+        heart->getTransform().translate(Vector3D(position.x, position.y - delta / 30.0f, 0));
     }
 }

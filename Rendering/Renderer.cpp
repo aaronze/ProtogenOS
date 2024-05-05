@@ -35,5 +35,9 @@ void Renderer::render(Scene* scene) {
         }
     }
 
+    if (!debugString.empty()) {
+        panel_->drawString(0, 0, 0x00FF00, debugString);
+    }
+
     panel_->display();
 }
