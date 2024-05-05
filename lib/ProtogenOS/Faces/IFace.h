@@ -10,6 +10,7 @@ enum Morph {
     Anger,
     Frown,
     HideBlush,
+    Sad,
 };
 
 class IFace : public Object {
@@ -81,7 +82,10 @@ public:
     }
 
     void reset() {
-        morphWeights.clear();
+        for (const auto& morphTarget : morphTargets) {
+            Morph morph = morphTarget.first;
+            morphTargets[morph] = 0;
+        }
     }
 
     void morph(Morph morph, float weight = 1.0f) {

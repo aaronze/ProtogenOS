@@ -5,6 +5,7 @@
 #include "ExternalDevices/Displays/HUB75.h"
 #include "ExternalDevices/Inputs/ButtonHandler.h"
 #include "Rendering/Effects/HeartBubbles.h"
+#include "Rendering/Effects/Crying.h"
 
 auto panel = std::make_unique<HUB75>(100);
 Renderer renderer(std::move(panel));
@@ -30,6 +31,8 @@ void loop() {
     auto delta = time - previousMillis;
     previousMillis = time;
 
+    face.morph(Morph::HideBlush, 1.0f);
+
     if (blinkCooldown == 0 && rand() % 100 == 1) {
         face.morph(Morph::Blink, 1.0f);
         blinkCooldown = 30;
@@ -40,11 +43,24 @@ void loop() {
     }
 
     if (buttonHandler.update()) {
-        face.reset();
-        face.morph(Morph::Love);
-
-        delete effect;
-        effect = new HeartBubbles(&scene, 20);
+        if (buttonHandler.getCurrentValue() == 12) {
+            face.reset();
+            face.morph(Morph::HideBlush);
+            face.morph(Morph::Love);
+            delete effect;
+            effect = new HeartBubbles(&scene, 20);
+        } else if (buttonHandler.getCurrentValue() == 19) {
+            face.reset();
+            face.morph(Morph::HideBlush);
+            face.morph(Morph::Sad);
+            delete effect;
+            effect = new Crying(&scene, 6);
+        } else {
+            face.reset();
+            face.morph(Morph::HideBlush);
+            delete effect;
+            effect = nullptr;
+        }
     }
 
     if (effect) {
