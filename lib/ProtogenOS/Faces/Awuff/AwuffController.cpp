@@ -2,6 +2,10 @@
 
 #include "Rendering/Effects/Crying.h"
 #include "Rendering/Effects/HeartBubbles.h"
+#include "Rendering/Materials/SolidMaterial.h"
+
+SolidMaterial Purple(0xFF00FF);
+SolidMaterial Red(0xFF0000);
 
 void AwuffController::update(unsigned long delta) {
     face->morph(Morph::HideBlush, 1.0f);
@@ -15,25 +19,40 @@ void AwuffController::update(unsigned long delta) {
         blinkCooldown--;
     }
 
-    if (input->update()) {
-        if (input->getCurrentValue() == 12) {
-            face->reset();
-            face->morph(Morph::HideBlush);
-            face->morph(Morph::Love);
-            clearEffects();
-            addEffect(new HeartBubbles(scene, 20));
-        } else if (input->getCurrentValue() == 19) {
-            face->reset();
-            face->morph(Morph::HideBlush);
-            face->morph(Morph::Sad);
-            clearEffects();
-            addEffect(new Crying(scene, Vector3D(-12, 9, 0), 6));
-        } else {
-            face->reset();
-            face->morph(Morph::HideBlush);
-            clearEffects();
-        }
-    }
+    selectFace();
 
     IController::update(delta);
+}
+
+void AwuffController::selectFace() {
+    bool hasInput = input->update();
+    if (!hasInput) return;
+
+    face->setMaterial(&Purple);
+    face->reset();
+    face->morph(Morph::HideBlush);
+    clearEffects();
+
+    switch (input->getCurrentValue()) {
+        case 1: angry();        break; // [A]ngry
+        case 12: love();        break; // [L]ove
+        case 19: sad();         break; // [S]ad
+    }
+}
+
+void AwuffController::angry() {
+    face->setMaterial(&Red);
+    face->morph(Morph::Anger);
+}
+
+void AwuffController::sad() {
+    face->morph(Morph::Sad);
+
+    addEffect(new Crying(scene, Vector3D(-12, 9, 0), 6));
+}
+
+void AwuffController::love() {
+    face->morph(Morph::Love);
+
+    addEffect(new HeartBubbles(scene, 20));
 }
