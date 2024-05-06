@@ -7,6 +7,7 @@ ButtonHandler::ButtonHandler(short pin) {
     previousMillis = millis();
     previousState = false;
     currentValue = 0;
+    inputCount = 0;
 }
 
 bool ButtonHandler::update() {

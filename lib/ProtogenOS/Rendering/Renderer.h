@@ -7,16 +7,12 @@
 
 class Renderer {
 private:
-    std::unique_ptr<IPanel> panel_;
     std::string debugString;
 
 public:
-    explicit Renderer(std::unique_ptr<IPanel> panel) : panel_(std::move(panel)) {}
-
     void debug(std::string string) {
         debugString = std::move(string);
     }
 
-    void setup();
-    void render(Scene* scene);
+    void render(Scene* scene, IPanel* panel);
 };

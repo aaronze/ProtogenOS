@@ -2,16 +2,12 @@
 #include "Renderer.h"
 #include "Math/Triangle.h"
 
-void Renderer::setup() {
-    panel_->setup();
-}
-
-void Renderer::render(Scene* scene) {
+void Renderer::render(Scene* scene, IPanel* panel) {
     auto objects = scene->getObjects();
-    auto width = panel_->width();
-    auto height = panel_->height();
+    auto width = panel->width();
+    auto height = panel->height();
 
-    panel_->clear();
+    panel->clear();
 
     for (uint16_t y = 0; y < height; y++) {
         for (uint16_t x = 0; x < width; x++) {
@@ -25,9 +21,9 @@ void Renderer::render(Scene* scene) {
 
                 for (auto &triangle: object->getMesh()->getTriangles()) {
                     if (triangle->intersects(rayOrigin, rayDirection, &intersection, &color)) {
-                        panel_->setPixel(width - x - 1, y, object->getMaterial()->getColor(
+                        panel->setPixel(width - x - 1, y, object->getMaterial()->getColor(
                                 {(float) x / (float) width, (float) y / (float) height, 0}, triangle->normal, color));
-                        panel_->setPixel(x, y + height, object->getMaterial()->getColor(
+                        panel->setPixel(x, y + height, object->getMaterial()->getColor(
                                 {(float) x / (float) width, (float) y / (float) height, 0}, triangle->normal, color));
                     }
                 }
@@ -36,8 +32,8 @@ void Renderer::render(Scene* scene) {
     }
 
     if (!debugString.empty()) {
-        panel_->drawString(0, 0, 0x00FF00, debugString);
+        panel->drawString(0, 0, 0x00FF00, debugString);
     }
 
-    panel_->display();
+    panel->display();
 }
