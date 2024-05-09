@@ -13,6 +13,7 @@ public:
     float dot(const Vector3D& vector) const;
     Vector3D clone() const;
     void add(float x, float y, float z);
+    void set(float x, float y, float z);
 
     bool operator ==(const Vector3D& vector) const;
     bool operator !=(const Vector3D& vector) const;

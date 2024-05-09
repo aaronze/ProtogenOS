@@ -35,6 +35,12 @@ void Vector3D::add(float x, float y, float z) {
     this->z += z;
 }
 
+void Vector3D::set(float x, float y, float z) {
+    this->x = x;
+    this->y = y;
+    this->z = z;
+}
+
 bool Vector3D::operator ==(const Vector3D& vector) const {
     return x == vector.x && y == vector.y && z == vector.z;
 }

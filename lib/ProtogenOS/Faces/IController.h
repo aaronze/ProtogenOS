@@ -39,8 +39,22 @@ public:
     }
 
     virtual void update(unsigned long delta) {
-        for (auto effect : effects) {
-            effect->update(delta);
+        size_t deadCount = 0;
+        for (auto &effect: effects) {
+            if (effect) {
+                if (effect->isAlive()) {
+                    effect->update(delta);
+                } else {
+                    delete effect;
+                    effect = nullptr;
+                }
+            } else {
+                deadCount++;
+            }
+        }
+
+        if (deadCount > 20) {
+            effects.erase(std::remove(effects.begin(), effects.end(), nullptr), effects.end());
         }
 
         scene->update();

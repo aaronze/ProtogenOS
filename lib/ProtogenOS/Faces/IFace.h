@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include "Math/Transform.h"
 #include "Rendering/Object.h"
 
 enum Morph {
@@ -39,9 +40,37 @@ private:
     }
 
 protected:
+    Transform importTransform;
+
+    template<size_t triangleCount, size_t vertexCount>
+    void setFace(unsigned int indexes[], float vertices[]) {
+        std::vector<unsigned int> indexList (indexes, indexes + triangleCount*3);
+        std::vector<float> vertexList (vertices, vertices + vertexCount*3);
+
+        Vector3D vec;
+        for (size_t i = 0; i < vertexCount * 3; i+=3) {
+            vec.set(vertexList[i], vertexList[i+1], vertexList[i+2]);
+            importTransform.apply(vec);
+            vertexList[i] = vec.x;
+            vertexList[i+1] = vec.y;
+            vertexList[i+2] = vec.z;
+        }
+
+        setMesh(new Mesh(vertexList, indexList));
+    }
+
     void addMorph(Morph morph, unsigned int count, unsigned int indexes[], float vertices[], float morphSpeed = 0.1f) {
         std::vector<unsigned int> indexList (indexes, indexes + count);
         std::vector<float> vertexList (vertices, vertices + count * 3);
+
+        Vector3D vec;
+        for (size_t i = 0; i < count * 3; i+=3) {
+            vec.set(vertexList[i], vertexList[i+1], vertexList[i+2]);
+            importTransform.apply(vec);
+            vertexList[i] = vec.x;
+            vertexList[i+1] = vec.y;
+            vertexList[i+2] = vec.z;
+        }
 
         morphIndexes[morph] = indexList;
         morphVertices[morph] = vertexList;
@@ -77,7 +106,7 @@ public:
         }
 
         auto wiggle = getWiggle(2.5f);
-        getTransform().translate({wiggle.x, wiggle.y, 0});
+        getTransform().setPosition({wiggle.x, wiggle.y, 0});
         getMesh()->applyTransform(getTransform());
     }
 

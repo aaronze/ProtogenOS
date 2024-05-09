@@ -1,9 +1,12 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::vector<Vector3D> vertices, std::vector<uint32_t> indexes) {
+Mesh::Mesh(std::vector<float> vertices, std::vector<unsigned int> indexes) {
     Vector3D minCorner;
     Vector3D maxCorner;
-    for (const auto& vector : vertices) {
+
+    for (size_t i = 0; i < vertices.size(); i+=3) {
+        Vector3D vector = Vector3D(vertices[i], vertices[i+1], vertices[i+2]);
+        this->originalVertices.push_back(vector.clone());
         this->vertices.push_back(vector.clone());
 
         if (vector.x < minCorner.x) minCorner.x = vector.x;
@@ -15,7 +18,7 @@ Mesh::Mesh(std::vector<Vector3D> vertices, std::vector<uint32_t> indexes) {
     }
     this->boundingBox = new BoundingBox(minCorner, maxCorner);
 
-    for (size_t i = 0; i < indexes.size(); i += 3) {
+    for (size_t i = 0; i < indexes.size(); i+=3) {
         TrianglePtr triangle = std::make_shared<Triangle>(
             &this->vertices[indexes[i]],
             &this->vertices[indexes[i+1]],
@@ -24,7 +27,6 @@ Mesh::Mesh(std::vector<Vector3D> vertices, std::vector<uint32_t> indexes) {
         this->triangles.push_back(triangle);
     }
 
-    this->originalVertices = std::move(vertices);
     this->indexes = std::move(indexes);
 }
 

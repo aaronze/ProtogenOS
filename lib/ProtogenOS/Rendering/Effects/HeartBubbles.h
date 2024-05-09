@@ -12,7 +12,7 @@ private:
     std::vector<Heart*> hearts;
 
 public:
-    explicit HeartBubbles(Scene* scene, unsigned int numberOfHearts = 5, unsigned long duration = 10000);
+    explicit HeartBubbles(Scene* scene, unsigned int numberOfHearts = 5, unsigned long duration = 3000);
     ~HeartBubbles() override;
 
     void update(unsigned long delta) override;

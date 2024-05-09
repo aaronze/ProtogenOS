@@ -7,7 +7,7 @@ HeartBubbles::HeartBubbles(Scene* scene, unsigned int numberOfHearts, unsigned l
         float x = -32 + (64.0f / numberOfHearts) * i;
 
         auto heart = new Heart();
-        heart->getTransform().translate(Vector3D(x + std::rand() % 4, 62 - std::rand() % 40, 0));
+        heart->getTransform().setPosition(Vector3D(x + std::rand() % 4, 62 - std::rand() % 40, 0));
         hearts.push_back(heart);
     }
 
@@ -27,6 +27,6 @@ HeartBubbles::~HeartBubbles() {
 void HeartBubbles::update(unsigned long delta) {
     for (auto heart : hearts) {
         auto position = heart->getTransform().getPosition();
-        heart->getTransform().translate(Vector3D(position.x, position.y - delta / 30.0f, 0));
+        heart->getTransform().setPosition(Vector3D(position.x, position.y - delta / 30.0f, 0));
     }
 }

@@ -13,7 +13,7 @@ private:
     Vector3D target;
 
 public:
-    explicit Crying(Scene* scene, Vector3D target, unsigned int numberOfTears = 5, unsigned long duration = 10000);
+    explicit Crying(Scene* scene, Vector3D target, unsigned int numberOfTears = 5, unsigned long duration = 1000000);
     ~Crying() override;
 
     void update(unsigned long delta) override;

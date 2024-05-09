@@ -12,14 +12,14 @@ using TrianglePtr = std::shared_ptr<Triangle>;
 class Mesh {
 private:
     std::vector<Vector3D> originalVertices;
-    std::vector<uint32_t> indexes;
+    std::vector<unsigned int> indexes;
     std::vector<TrianglePtr> triangles;
     std::vector<Vector3D> vertices;
     BoundingBox* boundingBox;
 
 public:
     Mesh() = default;
-    Mesh(std::vector<Vector3D> vertices, std::vector<uint32_t> indexes);
+    Mesh(std::vector<float> vertices, std::vector<unsigned int> indexes);
     ~Mesh();
 
     void reset();
