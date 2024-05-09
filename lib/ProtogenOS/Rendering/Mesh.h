@@ -22,6 +22,8 @@ public:
     Mesh(std::vector<float> vertices, std::vector<unsigned int> indexes);
     ~Mesh();
 
+    static Vector3D calculateCenter(float vertices[], size_t size);
+
     void reset();
     void applyTransform(Transform& transform);
     void applyMorph(std::vector<unsigned int> indexes, std::vector<float> morphVertices, float weight);

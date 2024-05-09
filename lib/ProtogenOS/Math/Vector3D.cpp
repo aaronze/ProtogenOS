@@ -56,6 +56,20 @@ Vector3D& Vector3D::operator +=(const Vector3D& vector) {
     return *this;
 }
 
+Vector3D &Vector3D::operator-=(const Vector3D &vector) {
+    x -= vector.x;
+    y -= vector.y;
+    z -= vector.z;
+    return *this;
+}
+
+Vector3D& Vector3D::operator *=(const Vector3D& vector) {
+    x *= vector.x;
+    y *= vector.y;
+    z *= vector.z;
+    return *this;
+}
+
 Vector3D Vector3D::operator +(const Vector3D& vector) const {
     return {x + vector.x, y + vector.y, z + vector.z };
 }
@@ -64,8 +78,8 @@ Vector3D Vector3D::operator -(const Vector3D& vector) const {
     return {x - vector.x, y - vector.y, z - vector.z };
 }
 
-float Vector3D::operator *(const Vector3D& vector) const {
-    return (x * vector.x) + (y * vector.y) + (z * vector.z);
+Vector3D Vector3D::operator *(const Vector3D& vector) const {
+    return { x * vector.x, y * vector.y, z * vector.z };
 }
 
 Vector3D Vector3D::operator +(const float& value) const {

@@ -5,38 +5,52 @@
 
 class Transform {
 private:
+    Vector3D origin;
     Vector3D position;
     Vector3D scale = {1.0f, 1.0f, 1.0f};
     Quaternion rotation = {1.0f, 0.0f, 0.0f, 0.0f};
 
 public:
-    Vector3D getPosition() {
-        return position;
+    void setOrigin(Vector3D origin) {
+        this->origin = origin;
     }
 
-    Vector3D getScale() {
-        return scale;
+    Vector3D getOrigin() {
+        return origin;
     }
 
     void setPosition(const Vector3D position) {
         this->position = position;
     }
 
+    Vector3D getPosition() {
+        return position;
+    }
+
     void setScale(const Vector3D scale) {
         this->scale = scale;
     }
 
+    Vector3D getScale() {
+        return scale;
+    }
+
     void setRotation(const float& angleInDegrees, const Vector3D& axis) {
-        rotation = Quaternion::createRotationQuaternion(angleInDegrees, axis);
+        this->rotation = Quaternion::createRotationQuaternion(angleInDegrees, axis);
+    }
+
+    void addRotation(const float& angleInDegrees, const Vector3D& axis) {
+        this->rotation = this->rotation * Quaternion::createRotationQuaternion(angleInDegrees, axis);
+    }
+
+    Quaternion getRotation() {
+        return rotation;
     }
 
     void apply(Vector3D& vector) const {
-        vector.x = vector.x * scale.x;
-        vector.y = vector.y * scale.y;
-        vector.z = vector.z * scale.z;
-
+        vector -= origin;
+        vector *= scale;
         vector = rotation.rotate(vector);
-
         vector += position;
     }
 

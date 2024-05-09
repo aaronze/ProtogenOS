@@ -18,10 +18,12 @@ public:
     bool operator ==(const Vector3D& vector) const;
     bool operator !=(const Vector3D& vector) const;
     Vector3D& operator +=(const Vector3D& vector);
+    Vector3D& operator -=(const Vector3D& vector);
+    Vector3D& operator *=(const Vector3D& vector);
     Vector3D& operator =(const Vector3D& vector) = default;
     Vector3D operator +(const Vector3D& vector) const;
     Vector3D operator -(const Vector3D& vector) const;
-    float operator *(const Vector3D& vector) const;
+    Vector3D operator *(const Vector3D& vector) const;
     Vector3D operator +(const float& value) const;
     Vector3D operator -(const float& value) const;
     Vector3D operator *(const float& value) const;

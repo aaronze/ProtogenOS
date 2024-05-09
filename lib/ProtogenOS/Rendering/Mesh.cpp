@@ -34,6 +34,26 @@ Mesh::~Mesh() {
     delete boundingBox;
 }
 
+Vector3D Mesh::calculateCenter(float *vertices, size_t size) {
+    Vector3D min;
+    Vector3D max;
+    for (size_t i = 0; i < size; i+=3) {
+        Vector3D vertex(vertices[i], vertices[i+1], vertices[i+2]);
+        if (i == 0) {
+            min = vertex;
+            max = vertex;
+        } else {
+            min.x = std::min(min.x, vertex.x);
+            min.y = std::min(min.y, vertex.y);
+            min.z = std::min(min.z, vertex.z);
+            max.x = std::max(max.x, vertex.x);
+            max.y = std::max(max.y, vertex.y);
+            max.z = std::max(max.z, vertex.z);
+        }
+    }
+    return (min + max) / 2.0f;
+}
+
 void Mesh::reset() {
     for (size_t i = 0; i < originalVertices.size(); i++) {
         vertices[i] = originalVertices[i];
