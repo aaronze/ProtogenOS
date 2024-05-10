@@ -1,18 +1,29 @@
+#include <math.h>
 #include <string>
-#include "Renderer.h"
 #include "Math/Triangle.h"
+#include "Renderer.h"
 
-void Renderer::render(Scene* scene, IPanel* panel) {
+void Renderer::render(Scene* scene, IPanel* panel, Camera* camera) {
     auto objects = scene->getObjects();
     auto width = panel->width();
     auto height = panel->height();
 
     panel->clear();
 
+    float tanFov = tanf(camera->fov * float(M_PI) / 180.0f / 2.0f);
     for (uint16_t y = 0; y < height; y++) {
         for (uint16_t x = 0; x < width; x++) {
-            Vector3D rayOrigin((float)x - width/2, (float)y - height/2, -100.0f);
-            Vector3D rayDirection(0, 0, 1.0f);
+            Vector3D rayOrigin, rayDirection;
+            if (camera->cameraType == CameraType::Perspective) {
+                float nx = (2.0f * ((float(x) + 0.5f) / float(width)) - 1.0f) * tanFov;
+                float ny = (2.0f * ((float(y) + 0.5f) / float(height)) - 1.0f) * tanFov;
+                rayOrigin = camera->position;
+                rayDirection = (camera->right * nx) + (camera->up * ny) + camera->forward;
+                rayDirection.normalize();
+            } else {
+                rayOrigin = camera->position + Vector3D((float)x - width/2, (float)y - height/2, -100.0f);
+                rayDirection = camera->forward;
+            }
 
             Vector3D intersection;
             Vector2D color;

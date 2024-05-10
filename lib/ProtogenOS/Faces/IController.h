@@ -15,6 +15,7 @@ protected:
     IPanel* panel;
     Scene* scene;
     Renderer* renderer;
+    Camera* camera;
     std::vector<IEffect*> effects;
 
 public:
@@ -28,6 +29,7 @@ public:
         scene = new Scene();
         scene->addObject(face);
 
+        camera = new Camera();
         renderer = new Renderer();
     }
 
@@ -36,6 +38,8 @@ public:
         delete panel;
         delete input;
         delete scene;
+        delete camera;
+        delete renderer;
     }
 
     virtual void update(unsigned long delta) {
@@ -58,7 +62,7 @@ public:
         }
 
         scene->update();
-        renderer->render(scene, panel);
+        renderer->render(scene, panel, camera);
     }
 
     void addEffect(IEffect* effect) {
@@ -70,5 +74,9 @@ public:
             delete effect;
         }
         effects.clear();
+    }
+
+    Camera* getCamera() {
+        return camera;
     }
 };
