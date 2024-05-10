@@ -42,6 +42,7 @@ void AwuffController::selectFace() {
 
     face->reset();
     face->setMaterial(&Purple);
+    face->morph(HideBlush);
 
     switch (input->getCurrentValue()) {
         case 1: angry();        break; // [A]ngry
