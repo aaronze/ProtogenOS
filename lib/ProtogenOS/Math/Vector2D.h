@@ -1,5 +1,7 @@
 #pragma once
 
+#include "math.h"
+
 class Vector2D {
 public:
     Vector2D() : x(0), y(0) {}
@@ -7,10 +9,12 @@ public:
 
     float x, y;
 
+    float length() const;
+
     bool operator ==(const Vector2D& vector) const;
     bool operator !=(const Vector2D& vector) const;
     Vector2D operator +=(const Vector2D& vector);
-    Vector2D operator =(const Vector2D& vector);
+    Vector2D& operator =(const Vector2D& vector);
     Vector2D operator +(const Vector2D& vector) const;
     Vector2D operator -(const Vector2D& vector) const;
     Vector2D operator +(const float& value) const;

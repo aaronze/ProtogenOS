@@ -9,4 +9,5 @@ public:
     virtual ~IMaterial() = default;
 
     virtual uint32_t getColor(const Vector3D& position, const Vector3D& normal, const Vector2D& uv) = 0;
+    virtual void update(unsigned long delta) {}
 };
