@@ -3,7 +3,8 @@
 #include <memory>
 #include <utility>
 #include "ExternalDevices/Displays/IPanel.h"
-#include "Rendering/Scene.h"
+#include "Camera.h"
+#include "Scene.h"
 
 class Renderer {
 private:
@@ -14,5 +15,5 @@ public:
         debugString = std::move(string);
     }
 
-    void render(Scene* scene, IPanel* panel);
+    void render(Scene* scene, IPanel* panel, Camera* camera);
 };
