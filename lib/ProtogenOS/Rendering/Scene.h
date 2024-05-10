@@ -9,9 +9,9 @@ private:
     std::vector<Object*> objects;
 
 public:
-    void update() {
+    void update(unsigned long delta) {
         for (auto obj: objects) {
-            obj->update();
+            obj->update(delta);
         }
     }
 

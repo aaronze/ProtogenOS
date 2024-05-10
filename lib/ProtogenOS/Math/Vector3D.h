@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Vector2D.h"
+
 class Vector3D {
 public:
     Vector3D() : x(0), y(0), z(0) {}
@@ -8,6 +10,7 @@ public:
     float x, y, z;
 
     float length() const;
+    Vector2D xy() const;
     Vector3D normalize();
     Vector3D cross(const Vector3D& vector) const;
     float dot(const Vector3D& vector) const;

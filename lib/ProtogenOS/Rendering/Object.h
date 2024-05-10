@@ -15,7 +15,9 @@ public:
     Object(Mesh* mesh, IMaterial* material) : mesh(mesh), material(material) {}
     virtual ~Object();
 
-    virtual void update() {
+    virtual void update(unsigned long delta) {
+        material->update(delta);
+
         mesh->reset();
         mesh->applyTransform(transform);
     }

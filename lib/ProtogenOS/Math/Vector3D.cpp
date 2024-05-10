@@ -5,6 +5,10 @@ float Vector3D::length() const {
     return sqrtf(x * x + y * y + z * z);
 }
 
+Vector2D Vector3D::xy() const {
+    return {x, y};
+}
+
 Vector3D Vector3D::normalize() {
     float length = this->length();
     x /= length;

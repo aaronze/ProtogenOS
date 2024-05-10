@@ -61,7 +61,7 @@ public:
             effects.erase(std::remove(effects.begin(), effects.end(), nullptr), effects.end());
         }
 
-        scene->update();
+        scene->update(delta);
         renderer->render(scene, panel, camera);
     }
 
@@ -78,5 +78,9 @@ public:
 
     Camera* getCamera() {
         return camera;
+    }
+
+    Renderer* getRenderer() {
+        return renderer;
     }
 };

@@ -80,7 +80,8 @@ protected:
 public:
     virtual ~IFace() = default;
 
-    void update() override {
+    void update(unsigned long delta) override {
+        getMaterial()->update(delta);
         getMesh()->reset();
 
         for (const auto& morphTarget : morphTargets) {
