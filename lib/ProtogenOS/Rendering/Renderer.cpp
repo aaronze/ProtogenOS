@@ -36,6 +36,7 @@ void Renderer::render(Scene* scene, IPanel* panel, Camera* camera) {
                                 {(float) x / (float) width, (float) y / (float) height, 0}, triangle->normal, color));
                         panel->setPixel(x, y + height, object->getMaterial()->getColor(
                                 {(float) x / (float) width, (float) y / (float) height, 0}, triangle->normal, color));
+                        break;
                     }
                 }
             }
