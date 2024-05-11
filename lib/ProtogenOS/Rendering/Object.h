@@ -5,15 +5,14 @@
 #include "Rendering/Mesh.h"
 
 class Object {
-private:
+protected:
     Transform transform;
-    Mesh* mesh;
-    IMaterial* material;
+    std::shared_ptr<Mesh> mesh;
+    std::shared_ptr<IMaterial> material;
 
 public:
     Object() = default;
     Object(Mesh* mesh, IMaterial* material) : mesh(mesh), material(material) {}
-    virtual ~Object();
 
     virtual void update(unsigned long delta) {
         material->update(delta);
@@ -22,11 +21,11 @@ public:
         mesh->applyTransform(transform);
     }
 
-    void setMaterial(IMaterial* material);
-    IMaterial* getMaterial() const;
+    virtual void setMaterial(std::shared_ptr<IMaterial> material);
+    std::shared_ptr<IMaterial> getMaterial() const;
 
-    void setMesh(Mesh* mesh);
-    Mesh* getMesh() const;
+    void setMesh(std::shared_ptr<Mesh> mesh);
+    std::shared_ptr<Mesh> getMesh() const;
 
     void setTransform(Transform transform);
     Transform& getTransform();

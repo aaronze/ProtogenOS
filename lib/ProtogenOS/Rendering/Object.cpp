@@ -1,23 +1,18 @@
 #include "Object.h"
 
-Object::~Object() {
-    delete material;
-    delete mesh;
-}
-
-void Object::setMaterial(IMaterial* material) {
+void Object::setMaterial(std::shared_ptr<IMaterial> material) {
     this->material = material;
 }
 
-IMaterial* Object::getMaterial() const {
+std::shared_ptr<IMaterial> Object::getMaterial() const {
     return material;
 }
 
-void Object::setMesh(Mesh* mesh) {
+void Object::setMesh(std::shared_ptr<Mesh> mesh) {
     this->mesh = mesh;
 }
 
-Mesh* Object::getMesh() const {
+std::shared_ptr<Mesh> Object::getMesh() const {
     return mesh;
 }
 

@@ -30,12 +30,12 @@ public:
         double theta = atan2(dy, dx);
 
         float pos = (r + spirality * theta) / gradientPeriod + angle;
-        pos -= floor(pos);
         unsigned int colorIndex = pos * colors.size();
         return colors[colorIndex % colors.size()];
     }
 
     void update(unsigned long delta) override {
         angle += rotationSpeed * float(delta) / 30.0f;
+        if (angle > M_PI * 2.0f) angle -= M_PI * 2.0f;
     }
 };

@@ -11,5 +11,6 @@ NukudeFace::NukudeFace() {
     importTransform.addRotation(10.0f, Vector3D(0.0f, 0.0f, 1.0f));
 
     setFace<44, 53>(indexes, vertices);
-    setMaterial(new SolidMaterial(0x0000FF));
+    auto material = std::make_shared<SolidMaterial>(0x0000FF);
+    setMaterial(std::move(material));
 }

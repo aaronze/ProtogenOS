@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include "Math/Transform.h"
 #include "Rendering/Object.h"
+#include "Rendering/Materials/BlendMaterial.h"
 
 enum Morph {
     Blink,
@@ -21,6 +22,8 @@ private:
     std::unordered_map<Morph, float> morphWeights;
     std::unordered_map<Morph, float> morphTargets;
     std::unordered_map<Morph, float> morphSpeeds;
+
+    std::shared_ptr<BlendMaterial> currentBlend;
 
     Vector2D getWiggle(float amplitude = 5.0f) {
         auto xPeriod = 5.3f / amplitude;
@@ -56,7 +59,8 @@ protected:
             vertexList[i+2] = vec.z;
         }
 
-        setMesh(new Mesh(vertexList, indexList));
+        auto mesh = std::make_shared<Mesh>(vertexList, indexList);
+        setMesh(std::move(mesh));
     }
 
     void addMorph(Morph morph, unsigned int count, unsigned int indexes[], float vertices[], float morphSpeed = 0.1f) {
@@ -120,5 +124,15 @@ public:
 
     void morph(Morph morph, float weight = 1.0f) {
         morphTargets[morph] = weight;
+    }
+
+    void blendMaterial(std::shared_ptr<IMaterial> to, float blendSpeed = 0.05f) {
+        if (currentBlend.use_count() > 0 && currentBlend->getProgress() > 0.99f) {
+            material = currentBlend->getMaterial();
+            currentBlend.reset();
+        }
+
+        currentBlend = std::make_shared<BlendMaterial>(material, to, blendSpeed);
+        this->material = currentBlend;
     }
 };

@@ -12,8 +12,11 @@ public:
         std::vector<float> vertexList (std::begin(vertices), std::end(vertices));
         std::vector<unsigned int> indexList (std::begin(indexes), std::end(indexes));
 
-        setMaterial(new SolidMaterial(0x0000FF));
-        setMesh(new Mesh(vertexList, indexList));
+        auto material = std::make_shared<SolidMaterial>(0x0000FF);
+        setMaterial(std::move(material));
+
+        auto mesh = std::make_shared<Mesh>(vertexList, indexList);
+        setMesh(std::move(mesh));
     }
 };
 

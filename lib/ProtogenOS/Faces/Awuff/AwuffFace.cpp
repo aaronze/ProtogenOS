@@ -24,7 +24,8 @@ AwuffFace::AwuffFace() {
     unsigned int indexes[132] = {13,8,7,2,3,14,8,6,5,13,1,6,11,7,2,15,4,2,7,10,3,8,12,10,34,36,35,19,18,16,21,20,18,23,24,22,25,26,27,28,27,23,37,38,40,31,29,30,32,34,33,36,38,37,39,40,20,11,13,7,9,2,14,12,8,5,8,13,6,4,11,2,9,15,2,2,7,3,7,8,10,33,34,35,17,19,16,19,21,18,0,23,22,28,25,27,0,28,23,39,37,40,32,31,30,31,32,33,35,36,37,21,39,20,50,52,49,48,45,47,42,43,44,44,41,42,52,50,51,47,45,46};
 
     setFace<44, 53>(indexes, vectors);
-    setMaterial(new SolidMaterial(0xFF00FF));
+    auto material = std::make_shared<SolidMaterial>(0xFF00FF);
+    setMaterial(std::move(material));
 
     addMorph(Morph::Love, 23, LoveIndexes, LoveVectors);
     addMorph(Morph::Sad, 29, SadIndexes, SadVectors);

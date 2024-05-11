@@ -5,9 +5,9 @@
 #include "Rendering/Materials/SolidMaterial.h"
 #include "Rendering/Materials/RainbowSpiral.h"
 
-SolidMaterial Purple(0xFF00FF);
-SolidMaterial Red(0xFF0000);
-RainbowSpiral Rainbow = RainbowSpiral(0.8f, {1.0f, 0.0f}, 2.0f, 0.03f);
+auto Purple = std::make_shared<SolidMaterial>(0xFF00FF);
+auto Red = std::make_shared<SolidMaterial>(0xFF0000);
+auto Rainbow = std::make_shared<RainbowSpiral>(0.8f, Vector2D(1.0f, 0.0f), 1.0f, 0.03f);
 
 void AwuffController::update(unsigned long delta) {
     face->morph(Morph::HideBlush);
@@ -22,10 +22,10 @@ void AwuffController::update(unsigned long delta) {
 
     if (BoopSensor::isBooped()) {
         face->morph(Morph::HideBlush, 0.0f);
-        face->setMaterial(&Rainbow);
+        face->blendMaterial(Rainbow);
         isBooped = true;
     } else if (isBooped) {
-        face->setMaterial(&Purple);
+        face->blendMaterial(currentMaterial);
         isBooped = false;
     }
 
@@ -41,7 +41,8 @@ void AwuffController::selectFace() {
     clearEffects();
 
     face->reset();
-    face->setMaterial(&Purple);
+    currentMaterial = Purple;
+    face->blendMaterial(currentMaterial);
     face->morph(HideBlush);
 
     switch (input->getCurrentValue()) {
@@ -52,7 +53,8 @@ void AwuffController::selectFace() {
 }
 
 void AwuffController::angry() {
-    face->setMaterial(&Red);
+    currentMaterial = Red;
+    face->blendMaterial(currentMaterial);
     face->morph(Morph::Anger);
 }
 
