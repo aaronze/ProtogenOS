@@ -25,7 +25,7 @@ private:
 
     std::shared_ptr<BlendMaterial> currentBlend;
 
-    Vector2D getWiggle(float amplitude = 5.0f) {
+    Vector2D getWiggle(float amplitude = 2.0f) {
         auto xPeriod = 5.3f / amplitude;
         auto yPeriod = 6.7f / amplitude;
 
@@ -39,7 +39,7 @@ private:
         xWave = min(max(xWave, -2.0f), 2.0f);
         yWave = min(max(yWave, -2.0f), 2.0f);
 
-        return {xWave, yWave};
+        return {xWave / 16.0f, yWave / 16.0f};
     }
 
 protected:
@@ -110,7 +110,7 @@ public:
             getMesh()->applyMorph(indexes, vertices, weight);
         }
 
-        auto wiggle = getWiggle(2.5f);
+        auto wiggle = getWiggle();
         getTransform().setPosition({wiggle.x, wiggle.y, 0});
         getMesh()->applyTransform(getTransform());
     }
