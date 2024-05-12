@@ -16,7 +16,7 @@ unsigned int HideBlushIndexes[12] = {41,42,43,44,45,46,47,48,49,50,51,52};
 float HideBlushVectors[36] = {19.37f,-7.21f,-0.45f,18.68f,-0.63f,-0.45f,17.37f,-0.66f,-0.45f,18.12f,-6.93f,-0.45f,16.6f,-7.04f,-0.45f,15.93f,-0.79f,-0.45f,14.5f,-0.89f,-0.45f,15.13f,-6.3f,-0.45f,13.69f,-5.97f,-0.45f,13.15f,-1.1f,-0.45f,11.97f,-1.21f,-0.45f,12.39f,-5.26f,-0.45f};
 
 AwuffFace::AwuffFace() {
-    importTransform.setScale(Vector3D(1.0f, 1.0f, 1.0f));
+    importTransform.setScale(Vector3D(1.0f / 32, 1.0f / 16, 1.0f / 16));
     importTransform.setPosition(Vector3D(0.0f, 0.0f, 0.0f));
     importTransform.setRotation(0.0f, Vector3D(0.0f, 0.0f, 0.0f));
 

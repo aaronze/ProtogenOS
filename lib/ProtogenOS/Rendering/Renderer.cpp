@@ -13,15 +13,17 @@ void Renderer::render(Scene* scene, IPanel* panel, Camera* camera) {
     float tanFov = tanf(camera->fov * float(M_PI) / 180.0f / 2.0f);
     for (uint16_t y = 0; y < height; y++) {
         for (uint16_t x = 0; x < width; x++) {
+            // Normalise display space to screen space (x: -1..1, y: -1..1)
+            float nx = (float(x) / float(width)) * 2.0f - 1.0f;
+            float ny = (float(y) / float(height)) * 2.0f - 1.0f;
+
             Vector3D rayOrigin, rayDirection;
             if (camera->cameraType == CameraType::Perspective) {
-                float nx = (2.0f * ((float(x) + 0.5f) / float(width)) - 1.0f) * tanFov;
-                float ny = (2.0f * ((float(y) + 0.5f) / float(height)) - 1.0f) * tanFov;
                 rayOrigin = camera->position;
-                rayDirection = (camera->right * nx) + (camera->up * ny) + camera->forward;
+                rayDirection = (camera->right * nx * tanFov) + (camera->up * ny * tanFov) + camera->forward;
                 rayDirection.normalize();
             } else {
-                rayOrigin = camera->position + Vector3D((float)x - width/2, (float)y - height/2, -100.0f);
+                rayOrigin = camera->position + Vector3D(nx, ny, -100.0f);
                 rayDirection = camera->forward;
             }
 
@@ -33,9 +35,9 @@ void Renderer::render(Scene* scene, IPanel* panel, Camera* camera) {
                 for (auto &triangle: object->getMesh()->getTriangles()) {
                     if (triangle->intersects(rayOrigin, rayDirection, &intersection, &color)) {
                         panel->setPixel(width - x - 1, y, object->getMaterial()->getColor(
-                                {(float) x / (float) width, (float) y / (float) height, 0}, triangle->normal, color));
+                                {nx * 2.0f - 1.0f, ny * 2.0f - 1.0f, 0}, triangle->normal, color));
                         panel->setPixel(x, y + height, object->getMaterial()->getColor(
-                                {(float) x / (float) width, (float) y / (float) height, 0}, triangle->normal, color));
+                                {nx * 2.0f - 1.0f, ny * 2.0f - 1.0f, 0}, triangle->normal, color));
                         break;
                     }
                 }
