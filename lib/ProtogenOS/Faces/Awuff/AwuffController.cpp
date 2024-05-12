@@ -29,15 +29,17 @@ void AwuffController::update(unsigned long delta) {
         isBooped = false;
     }
 
-    selectFace();
+    bool hasInput = input->update();
+    if (hasInput) {
+        if (!handleMenu()) {
+            selectFace();
+        }
+    }
 
     IController::update(delta);
 }
 
 void AwuffController::selectFace() {
-    bool hasInput = input->update();
-    if (!hasInput) return;
-
     clearEffects();
 
     face->reset();

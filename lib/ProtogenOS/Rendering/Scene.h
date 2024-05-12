@@ -9,7 +9,7 @@ private:
     std::vector<Object*> objects;
 
 public:
-    void update(unsigned long delta) {
+    virtual void update(unsigned long delta) {
         for (auto obj: objects) {
             obj->update(delta);
         }
@@ -27,7 +27,7 @@ public:
         objects.erase(std::remove(objects.begin(), objects.end(), obj), objects.end());
     }
 
-    std::vector<Object*> getObjects() {
+    virtual std::vector<Object*> getObjects() {
         return objects;
     }
 };

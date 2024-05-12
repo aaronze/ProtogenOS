@@ -7,6 +7,7 @@
 #include "Rendering/Effects/IEffect.h"
 #include "Rendering/Scene.h"
 #include "Rendering/Renderer.h"
+#include "Scenes/Menu.h"
 
 class IController {
 protected:
@@ -16,6 +17,7 @@ protected:
     Scene* scene;
     Renderer* renderer;
     Camera* camera;
+    Menu* menu;
     std::vector<IEffect*> effects;
 
 public:
@@ -31,6 +33,7 @@ public:
 
         camera = new Camera();
         renderer = new Renderer();
+        menu = new Menu(scene);
     }
 
     ~IController() {
@@ -40,6 +43,7 @@ public:
         delete scene;
         delete camera;
         delete renderer;
+        delete menu;
     }
 
     virtual void update(unsigned long delta) {
@@ -82,5 +86,27 @@ public:
 
     Renderer* getRenderer() {
         return renderer;
+    }
+
+    void showMenu() {
+        scene = menu;
+    }
+
+    void hideMenu() {
+        scene = menu->getPreview();
+    }
+
+    bool handleMenu() {
+        auto command = input->getCurrentValue();
+        if (scene == menu) {
+            switch(command) {
+                case 20: hideMenu(); return true;
+            }
+        } else if (command == 20) {
+            showMenu();
+            return true;
+        }
+
+        return false;
     }
 };
