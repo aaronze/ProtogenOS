@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "Quaternion.h"
 #include "Vector3D.h"
 
@@ -52,6 +53,17 @@ public:
         vector *= scale;
         vector = rotation.rotate(vector);
         vector += position;
+    }
+
+    void apply(std::vector<float>& vectors) const {
+        Vector3D vec;
+        for (size_t i = 0; i < vectors.size(); i+=3) {
+            vec.set(vectors[i], vectors[i+1], vectors[i+2]);
+            apply(vec);
+            vectors[i] = vec.x;
+            vectors[i+1] = vec.y;
+            vectors[i+2] = vec.z;
+        }
     }
 
     Vector3D transform(Vector3D vector) const {

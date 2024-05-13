@@ -50,14 +50,7 @@ protected:
         std::vector<unsigned int> indexList (indexes, indexes + triangleCount*3);
         std::vector<float> vertexList (vertices, vertices + vertexCount*3);
 
-        Vector3D vec;
-        for (size_t i = 0; i < vertexCount * 3; i+=3) {
-            vec.set(vertexList[i], vertexList[i+1], vertexList[i+2]);
-            importTransform.apply(vec);
-            vertexList[i] = vec.x;
-            vertexList[i+1] = vec.y;
-            vertexList[i+2] = vec.z;
-        }
+        importTransform.apply(vertexList);
 
         auto mesh = std::make_shared<Mesh>(vertexList, indexList);
         setMesh(std::move(mesh));

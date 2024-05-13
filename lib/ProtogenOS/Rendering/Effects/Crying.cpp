@@ -6,7 +6,7 @@ Crying::Crying(Scene* scene, Vector3D target, unsigned int numberOfTears, unsign
 
     for (unsigned int i = 0; i < numberOfTears; i++) {
         auto tear = new Tear();
-        tear->getTransform().setPosition(Vector3D(target.x + std::rand() % 10 - 5, target.y + std::rand() % 10 - 5, 0));
+        tear->getTransform().setPosition(Vector3D(target.x + (std::rand() % 10 - 5) / 32.0f, target.y + (std::rand() % 10 - 5) / 16.0f, 0));
         tears.push_back(tear);
     }
 
@@ -26,7 +26,7 @@ Crying::~Crying() {
 void Crying::update(unsigned long delta) {
     for (auto tear : tears) {
         auto position = tear->getTransform().getPosition();
-        if (position.y > target.y) position.y -= 5.0f;
-        tear->getTransform().setPosition(Vector3D(position.x, position.y + delta / 200.0f, 0));
+        if (position.y > target.y) position.y -= 5.0f / 16.0f;
+        tear->getTransform().setPosition(Vector3D(position.x, position.y + delta / 1400.0f, 0));
     }
 }

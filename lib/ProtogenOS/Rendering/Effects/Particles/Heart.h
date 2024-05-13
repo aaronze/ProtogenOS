@@ -12,6 +12,10 @@ public:
         std::vector<float> vertexList (std::begin(vertices), std::end(vertices));
         std::vector<unsigned int> indexList (std::begin(indexes), std::end(indexes));
 
+        Transform importTransform;
+        importTransform.setScale(Vector3D(1.0f / 32, 1.0f / 16, 1.0f / 16));
+        importTransform.apply(vertexList);
+
         auto material = std::make_shared<SolidMaterial>(0xFF0000);
         setMaterial(std::move(material));
 
