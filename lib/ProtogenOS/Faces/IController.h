@@ -10,6 +10,9 @@
 #include "Scenes/Menu.h"
 
 class IController {
+private:
+    float menuCooldown;
+
 protected:
     IFace* face;
     IInput* input;
@@ -47,6 +50,14 @@ public:
     }
 
     virtual void update(unsigned long delta) {
+        if (menuCooldown > 0.0f) {
+            menuCooldown -= float(delta) / 1000.0f;
+            if (menuCooldown < 0) {
+                menuCooldown = 0.0f;
+                scene = menu->getPreview();
+            }
+        }
+
         size_t deadCount = 0;
         for (auto &effect: effects) {
             if (effect) {
@@ -90,10 +101,12 @@ public:
 
     void showMenu() {
         scene = menu;
+        menu->showMenu();
     }
 
     void hideMenu() {
-        scene = menu->getPreview();
+        menuCooldown = 0.5f;
+        menu->hideMenu();
     }
 
     bool handleMenu() {

@@ -1,10 +1,10 @@
 #pragma once
 
 #include <string>
+#include "IUI.h"
 #include "Math/Vector2D.h"
-#include "ExternalDevices/Displays/IPanel.h"
 
-class Text2D {
+class Text2D : public IUI {
 private:
     std::string text;
     Vector2D position;
@@ -25,7 +25,9 @@ public:
         this->color = color;
     }
 
-    void render(IPanel* panel) {
+    void render(IPanel* panel) override {
+        if (text.empty()) return;
+
         panel->drawString(position.x, position.y, color, text);
     }
 };

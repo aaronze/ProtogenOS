@@ -45,9 +45,10 @@ void Renderer::render(Scene* scene, IPanel* panel, Camera* camera) {
         }
     }
 
-    if (!debugString.empty()) {
-        panel->drawString(0, 0, 0x00FF00, debugString);
+    for (auto ui : scene->getUI()) {
+        ui->render(panel);
     }
+    debugText.render(panel);
 
     panel->display();
 }
