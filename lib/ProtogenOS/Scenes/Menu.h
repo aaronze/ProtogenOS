@@ -17,15 +17,15 @@ public:
     void showMenu() {
         animation->clear();
         animation->addKeyFrame(transform, 0.0f, 0.0f);
-        animation->addKeyFrame(KeyFrame::fromMove(0.4f, 0.2f, 0.0f), 0.0f, 0.5f);
-        animation->addKeyFrame(KeyFrame::fromScale(-0.5f, -0.5f, -0.5f), 0.0f, 0.5f);
+        animation->addKeyFrame(KeyFrame::fromMove(0.4f, 0.2f, 0.0f), 0.0f, 0.5f, AnimationStyle::ElasticOut);
+        animation->addKeyFrame(KeyFrame::fromScale(-0.5f, -0.5f, -0.5f), 0.0f, 0.5f, AnimationStyle::ElasticOut);
     }
 
     void hideMenu() {
         animation->clear();
         animation->addKeyFrame(transform, 0.0f, 0.0f);
-        animation->addKeyFrame(KeyFrame::fromMove(-0.4f, -0.2f, 0.0f), 0.0f, 0.5f);
-        animation->addKeyFrame(KeyFrame::fromScale(0.5f, 0.5f, 0.5f), 0.0f, 0.5f);
+        animation->addKeyFrame(KeyFrame::fromMove(-0.4f, -0.2f, 0.0f), 0.0f, 0.5f, AnimationStyle::ElasticOut);
+        animation->addKeyFrame(KeyFrame::fromScale(0.5f, 0.5f, 0.5f), 0.0f, 0.5f, AnimationStyle::ElasticOut);
     }
 
     Scene* getPreview() {

@@ -23,6 +23,16 @@ protected:
     Menu* menu;
     std::vector<IEffect*> effects;
 
+    void showMenu() {
+        scene = menu;
+        menu->showMenu();
+    }
+
+    void hideMenu() {
+        menuCooldown = 0.5f;
+        menu->hideMenu();
+    }
+
 public:
     IController(IFace* face, IPanel* panel, IInput* input) {
         this->face = face;
@@ -99,24 +109,26 @@ public:
         return renderer;
     }
 
-    void showMenu() {
-        scene = menu;
-        menu->showMenu();
-    }
-
-    void hideMenu() {
-        menuCooldown = 0.5f;
-        menu->hideMenu();
+    void toggleMenu() {
+        if (menuCooldown > 0) {
+            menuCooldown = 0.0f;
+            showMenu();
+        } else if (scene == menu) {
+            hideMenu();
+        } else {
+            showMenu();
+        }
     }
 
     bool handleMenu() {
         auto command = input->getCurrentValue();
+
         if (scene == menu) {
             switch(command) {
-                case 20: hideMenu(); return true;
+                case 20: toggleMenu(); return true;
             }
         } else if (command == 20) {
-            showMenu();
+            toggleMenu();
             return true;
         }
 

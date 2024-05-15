@@ -2,9 +2,15 @@
 
 #include "Math/Transform.h"
 #include "Math/Generators/LinearGenerator.h"
+#include "Math/Generators/EaseInGenerator.h"
+#include "Math/Generators/EaseOutGenerator.h"
+#include "Math/Generators/ElasticOutGenerator.h"
 
 enum class AnimationStyle {
-    Linear
+    Linear,
+    EaseIn,
+    EaseOut,
+    ElasticOut,
 };
 
 class KeyFrame {
@@ -12,20 +18,25 @@ private:
     Transform keyFrame;
     float start;
     float end;
-    IGenerator* generator;
+    std::unique_ptr<IGenerator> generator;
 
 public:
     explicit KeyFrame(Transform keyFrame, float start = 0.0f, float duration = 1.0f, AnimationStyle animationStyle = AnimationStyle::Linear)
         : keyFrame(keyFrame), start(start), end(start + duration) {
         switch (animationStyle) {
             case AnimationStyle::Linear:
-                generator = new LinearGenerator(0.0f, 1.0f, 1.0f / (30.0f * duration));
+                generator = std::make_unique<LinearGenerator>(0.0f, 1.0f, 1.0f / (30.0f * duration));
+                break;
+            case AnimationStyle::EaseIn:
+                generator = std::make_unique<EaseInGenerator>(0.0f, 1.0f, 1.0f / (30.0f * duration));
+                break;
+            case AnimationStyle::EaseOut:
+                generator = std::make_unique<EaseOutGenerator>(0.0f, 1.0f, 1.0f / (30.0f * duration));
+                break;
+            case AnimationStyle::ElasticOut:
+                generator = std::make_unique<ElasticOutGenerator>(0.0f, 1.0f, 1.0f / (30.0f * duration));
                 break;
         }
-    }
-
-    ~KeyFrame() {
-        delete generator;
     }
 
     static Transform fromMove(float x = 0.0f, float y = 0.0f, float z = 0.0f) {
