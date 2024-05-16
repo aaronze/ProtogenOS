@@ -1,13 +1,15 @@
 #pragma once
 
 #include "Math/Transform.h"
-#include "Math/Generators/LinearGenerator.h"
 #include "Math/Generators/EaseInGenerator.h"
 #include "Math/Generators/EaseOutGenerator.h"
 #include "Math/Generators/ElasticOutGenerator.h"
+#include "Math/Generators/LinearGenerator.h"
+#include "Math/Generators/SineGenerator.h"
 
 enum class AnimationStyle {
     Linear,
+    Sine,
     EaseIn,
     EaseOut,
     ElasticOut,
@@ -27,6 +29,9 @@ public:
             case AnimationStyle::Linear:
                 generator = std::make_unique<LinearGenerator>(0.0f, 1.0f, 1.0f / (30.0f * duration));
                 break;
+            case AnimationStyle::Sine:
+                generator = std::make_unique<SineGenerator>(0.0f, 1.0f, 1.0f);
+                break;
             case AnimationStyle::EaseIn:
                 generator = std::make_unique<EaseInGenerator>(0.0f, 1.0f, 1.0f / (30.0f * duration));
                 break;
@@ -38,6 +43,9 @@ public:
                 break;
         }
     }
+
+    explicit KeyFrame(Transform keyFrame, float start, float duration, std::unique_ptr<IGenerator>& generator)
+        : keyFrame(keyFrame), start(start), end(start + duration), generator(std::move(generator)) {}
 
     static Transform fromMove(float x = 0.0f, float y = 0.0f, float z = 0.0f) {
         auto transform = Transform();

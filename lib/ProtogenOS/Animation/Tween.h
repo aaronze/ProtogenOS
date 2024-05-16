@@ -18,11 +18,16 @@ public:
 
     explicit Tween(Transform& target) : target(target) {
         progress = 0.0f;
+        addKeyFrame(target, 0.0f, 0.0f);
     }
 
     void clear() {
         keyFrames.clear();
         progress = 0.0f;
+    }
+
+    void addKeyFrame(std::unique_ptr<KeyFrame>& keyFrame) {
+        keyFrames.push_back(std::move(keyFrame));
     }
 
     void addKeyFrame(Transform transform, float start = 0.0f, float duration = 1.0f, AnimationStyle animationStyle = AnimationStyle::Linear) {
