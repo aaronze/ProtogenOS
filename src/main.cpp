@@ -4,16 +4,21 @@
 #include "ExternalDevices/Displays/HUB75.h"
 #include "ExternalDevices/Inputs/ButtonHandler.h"
 
-IController* controller;
+std::shared_ptr<IController> controller;
 unsigned long previousMillis;
 
 void setup() {
     previousMillis = millis();
 
-    auto face = new AwuffFace();
-    auto panel = new HUB75(120);
-    auto input = new ButtonHandler(23);
-    controller = new AwuffController(face, panel, input);
+    std::shared_ptr<IFace> face = std::make_shared<AwuffFace>();
+    std::shared_ptr<IPanel> panel = std::make_shared<HUB75>(120);
+    std::shared_ptr<IInput> input = std::make_shared<ButtonHandler>(23);
+    controller = std::make_shared<AwuffController>(face, panel, input);
+
+//    std::shared_ptr<IFace> face = std::make_shared<NukudeFace>();
+//    std::shared_ptr<IPanel> panel = std::make_shared<HUB75>(120);
+//    std::shared_ptr<IInput> input = std::make_shared<ButtonHandler>(23);
+//    controller = std::make_shared<NukudeController>(face, panel, input);
 }
 
 void loop() {

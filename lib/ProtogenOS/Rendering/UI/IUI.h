@@ -4,5 +4,5 @@
 
 class IUI {
 public:
-    virtual void render(IPanel* panel) = 0;
+    virtual void render(std::shared_ptr<IPanel>& panel) = 0;
 };

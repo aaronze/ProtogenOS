@@ -16,5 +16,5 @@ public:
         debugText.setText(std::move(string));
     }
 
-    void render(Scene* scene, IPanel* panel, Camera* camera);
+    void render(std::shared_ptr<Scene>& scene, std::shared_ptr<IPanel>& panel, std::shared_ptr<Camera>& camera);
 };

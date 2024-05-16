@@ -15,7 +15,7 @@ private:
     void love();
 
 public:
-    AwuffController(IFace* face, IPanel* panel, IInput* input) : IController(face, panel, input) {
+    AwuffController(std::shared_ptr<IFace>& face, std::shared_ptr<IPanel>& panel, std::shared_ptr<IInput>& input) : IController(face, panel, input) {
         BoopSensor::begin(5);
         currentMaterial = face->getMaterial();
     }

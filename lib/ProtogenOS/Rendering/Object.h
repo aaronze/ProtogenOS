@@ -13,6 +13,7 @@ protected:
 public:
     Object() = default;
     Object(Mesh* mesh, IMaterial* material) : mesh(mesh), material(material) {}
+    virtual ~Object() = default;
 
     virtual void update(unsigned long delta) {
         material->update(delta);

@@ -63,11 +63,11 @@ void AwuffController::angry() {
 void AwuffController::sad() {
     face->morph(Morph::Sad);
 
-    addEffect(new Crying(scene, Vector3D(-0.4f, 0.5f, 0), 6));
+    addEffect(std::make_shared<Crying>(scene, Vector3D(-0.4f, 0.5f, 0), 6));
 }
 
 void AwuffController::love() {
     face->morph(Morph::Love);
 
-    addEffect(new HeartBubbles(scene, 20));
+    addEffect(std::make_shared<HeartBubbles>(scene, 20));
 }

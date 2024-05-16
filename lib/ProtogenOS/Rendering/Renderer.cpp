@@ -3,7 +3,7 @@
 #include "Math/Triangle.h"
 #include "Renderer.h"
 
-void Renderer::render(Scene* scene, IPanel* panel, Camera* camera) {
+void Renderer::render(std::shared_ptr<Scene>& scene, std::shared_ptr<IPanel>& panel, std::shared_ptr<Camera>& camera) {
     auto objects = scene->getObjects();
     auto width = panel->width();
     auto height = panel->height();
@@ -32,7 +32,7 @@ void Renderer::render(Scene* scene, IPanel* panel, Camera* camera) {
             for (auto& object : objects) {
                 if (!object->getMesh()->getBoundingBox()->intersects(rayOrigin, rayDirection)) continue;
 
-                for (auto &triangle: object->getMesh()->getTriangles()) {
+                for (auto& triangle: object->getMesh()->getTriangles()) {
                     if (triangle->intersects(rayOrigin, rayDirection, &intersection, &color)) {
                         panel->setPixel(width - x - 1, y, object->getMaterial()->getColor(
                                 {nx * 2.0f - 1.0f, ny * 2.0f - 1.0f, 0}, triangle->normal, color));
@@ -45,7 +45,7 @@ void Renderer::render(Scene* scene, IPanel* panel, Camera* camera) {
         }
     }
 
-    for (auto ui : scene->getUI()) {
+    for (auto& ui : scene->getUI()) {
         ui->render(panel);
     }
     debugText.render(panel);

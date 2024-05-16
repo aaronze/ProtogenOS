@@ -25,7 +25,7 @@ public:
         this->color = color;
     }
 
-    void render(IPanel* panel) override {
+    void render(std::shared_ptr<IPanel>& panel) override {
         if (text.empty()) return;
 
         panel->drawString(position.x, position.y, color, text);

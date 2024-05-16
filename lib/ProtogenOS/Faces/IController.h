@@ -14,50 +14,39 @@ private:
     float menuCooldown;
 
 protected:
-    IFace* face;
-    IInput* input;
-    IPanel* panel;
-    Scene* scene;
-    Renderer* renderer;
-    Camera* camera;
-    Menu* menu;
-    std::vector<IEffect*> effects;
+    std::shared_ptr<IFace> face;
+    std::shared_ptr<IPanel> panel;
+    std::shared_ptr<IInput> input;
+    std::shared_ptr<Scene> scene;
+    std::shared_ptr<Renderer> renderer;
+    std::shared_ptr<Camera> camera;
+    std::shared_ptr<Menu> menu;
+    std::vector<std::shared_ptr<IEffect>> effects;
 
     void showMenu() {
         scene = menu;
-        menu->showMenu();
+        menu->showMenu(0.5f);
     }
 
     void hideMenu() {
         menuCooldown = 0.5f;
-        menu->hideMenu();
+        menu->hideMenu(0.5f);
     }
 
 public:
-    IController(IFace* face, IPanel* panel, IInput* input) {
-        this->face = face;
-        this->panel = panel;
-        this->input = input;
-
+    IController(std::shared_ptr<IFace>& face, std::shared_ptr<IPanel>& panel, std::shared_ptr<IInput>& input)
+      : face(face), panel(panel), input(input) {
         this->panel->setup();
 
-        scene = new Scene();
-        scene->addObject(face);
+        scene = std::make_shared<Scene>();
+        scene->addObject(this->face);
 
-        camera = new Camera();
-        renderer = new Renderer();
-        menu = new Menu(scene);
+        camera = std::make_shared<Camera>();
+        renderer = std::make_shared<Renderer>();
+        menu = std::make_shared<Menu>(scene);
     }
 
-    ~IController() {
-        delete face;
-        delete panel;
-        delete input;
-        delete scene;
-        delete camera;
-        delete renderer;
-        delete menu;
-    }
+    virtual ~IController() = default;
 
     virtual void update(unsigned long delta) {
         if (menuCooldown > 0.0f) {
@@ -69,12 +58,11 @@ public:
         }
 
         size_t deadCount = 0;
-        for (auto &effect: effects) {
+        for (auto& effect: effects) {
             if (effect) {
                 if (effect->isAlive()) {
                     effect->update(delta);
                 } else {
-                    delete effect;
                     effect = nullptr;
                 }
             } else {
@@ -90,22 +78,19 @@ public:
         renderer->render(scene, panel, camera);
     }
 
-    void addEffect(IEffect* effect) {
+    void addEffect(const std::shared_ptr<IEffect>& effect) {
         effects.push_back(effect);
     }
 
     void clearEffects() {
-        for (auto effect : effects) {
-            delete effect;
-        }
         effects.clear();
     }
 
-    Camera* getCamera() {
+    std::shared_ptr<Camera> getCamera() {
         return camera;
     }
 
-    Renderer* getRenderer() {
+    std::shared_ptr<Renderer> getRenderer() {
         return renderer;
     }
 

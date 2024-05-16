@@ -7,12 +7,14 @@
 
 class Scene {
 private:
-    std::vector<Object*> objects;
-    std::vector<IUI*> ui;
+    std::vector<std::shared_ptr<Object>> objects;
+    std::vector<std::shared_ptr<IUI>> ui;
 
 public:
+    virtual ~Scene() = default;
+
     virtual void update(unsigned long delta) {
-        for (auto obj: objects) {
+        for (auto& obj: objects) {
             obj->update(delta);
         }
     }
@@ -21,11 +23,11 @@ public:
         objects.clear();
     }
 
-    void addObject(Object* obj) {
+    void addObject(const std::shared_ptr<Object>& obj) {
         objects.push_back(obj);
     }
 
-    void removeObject(Object* obj) {
+    void removeObject(const std::shared_ptr<Object>& obj) {
         objects.erase(std::remove(objects.begin(), objects.end(), obj), objects.end());
     }
 
@@ -33,19 +35,19 @@ public:
         ui.clear();
     }
 
-    void addUI(IUI* ui) {
-        this->ui.push_back(ui);
+    void addUI(std::shared_ptr<IUI>& element) {
+        ui.push_back(element);
     }
 
-    void removeUI(IUI* ui) {
-        this->ui.erase(std::remove(this->ui.begin(), this->ui.end(), ui), this->ui.end());
+    void removeUI(std::shared_ptr<IUI>& element) {
+        ui.erase(std::remove(ui.begin(), ui.end(), element), ui.end());
     }
 
-    virtual std::vector<Object*> getObjects() {
+    virtual std::vector<std::shared_ptr<Object>> getObjects() {
         return objects;
     }
 
-    virtual std::vector<IUI*> getUI() {
+    virtual std::vector<std::shared_ptr<IUI>> getUI() {
         return ui;
     }
 };
