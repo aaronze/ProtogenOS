@@ -29,11 +29,11 @@ public:
 
             auto tween = std::make_shared<Tween>(heart->getTransform());
             tween->addKeyFrame(KeyFrame::fromMove(startX, startY), 0.0f, 0.0f);
-            tween->addKeyFrame(KeyFrame::fromScale(0.4f, 0.4f, 1.0f), 0.0f, 0.0f);
+            tween->addKeyFrame(KeyFrame::fromScale(0.16f, 0.16f, 1.0f), 0.0f, 0.0f);
             tween->addKeyFrame(KeyFrame::fromMove(0.0f, -(float(std::rand() % 7) + 7.0f)), 0.0f, duration);
 
             std::unique_ptr<IGenerator> wobbleGen = std::make_unique<SineGenerator>((std::rand() % 360) / M_PI, 1.0f, (std::rand() % 4 + 4) / 8.0f);
-            auto wobble = std::make_unique<KeyFrame>(KeyFrame::fromScale(0.2f, 0.2f, 0.2f), 0.0f, duration, wobbleGen);
+            auto wobble = std::make_unique<KeyFrame>(KeyFrame::fromScale(0.15f, 0.15f, 0.2f), 0.0f, duration, wobbleGen);
             tween->addKeyFrame(wobble);
 
             tweens.push_back(tween);

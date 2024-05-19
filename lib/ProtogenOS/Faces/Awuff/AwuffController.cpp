@@ -7,11 +7,9 @@
 
 auto Purple = std::make_shared<SolidMaterial>(0xFF00FF);
 auto Red = std::make_shared<SolidMaterial>(0xFF0000);
-auto Rainbow = std::make_shared<RainbowSpiral>(0.8f, Vector2D(1.0f, 0.0f), 1.0f, 0.03f);
+auto Rainbow = std::make_shared<RainbowSpiral>(0.8f, Vector2D(10.0f, 10.0f), 1.0f, 0.004f);
 
 void AwuffController::update(unsigned long delta) {
-    face->morph(Morph::HideBlush);
-
     if (blinkCooldown == 0 && rand() % 100 == 1) {
         face->morph(Morph::Blink, 1.0f);
         blinkCooldown = 30;
@@ -21,35 +19,46 @@ void AwuffController::update(unsigned long delta) {
     }
 
     if (BoopSensor::isBooped()) {
-        face->morph(Morph::HideBlush, 0.0f);
         face->blendMaterial(Rainbow);
+        face->morph(Morph::Happy);
         isBooped = true;
+        isBlushing = true;
     } else if (isBooped) {
         face->blendMaterial(currentMaterial);
+        face->morph(Morph::Happy, 0.0f);
         isBooped = false;
+        isBlushing = false;
     }
 
     bool hasInput = input->update();
     if (hasInput) {
         if (!handleMenu()) {
-            selectFace();
+            selectFace(input->getCurrentValue());
         }
     }
 
+    face->morph(Morph::HideBlush, isBlushing ? 0.0f : 1.0f, true);
     IController::update(delta);
 }
 
-void AwuffController::selectFace() {
+void AwuffController::selectFace(short index) {
     clearEffects();
 
     face->reset();
     currentMaterial = Purple;
     face->blendMaterial(currentMaterial);
-    face->morph(HideBlush);
+    isBlushing = false;
 
-    switch (input->getCurrentValue()) {
-        case 1: angry();        break; // [A]ngry
+    switch (index) {
+        case 1:  angry();       break; // [A]ngry
+        case 2: blush();        break; // [B]lush
+        case 5:  next();        break; // N[e]xt
+        case 9: fan();          break;
+//        case 8:  happy();       break; // [H]appy
         case 12: love();        break; // [L]ove
+        case 14: angry();       break; // Angry backup
+        case 15: surprised();   break; // [O]surprised
+        case 18: love();         break; // Love backup
         case 19: sad();         break; // [S]ad
     }
 }
@@ -57,17 +66,35 @@ void AwuffController::selectFace() {
 void AwuffController::angry() {
     currentMaterial = Red;
     face->blendMaterial(currentMaterial);
-    face->morph(Morph::Anger);
+    face->morph(Anger);
 }
 
 void AwuffController::sad() {
-    face->morph(Morph::Sad);
+    face->morph(Sad);
 
     addEffect(std::make_shared<Crying>(scene, Vector3D(-0.4f, 0.5f, 0), 6));
 }
 
 void AwuffController::love() {
-    face->morph(Morph::Love);
+    face->morph(Love);
 
-    addEffect(std::make_shared<HeartBubbles>(scene, 20));
+    addEffect(std::make_shared<HeartBubbles>(scene, 30));
+}
+
+void AwuffController::surprised() {
+    face->morph(Surprised);
+}
+
+void AwuffController::happy() {
+    face->morph(Happy);
+}
+
+void AwuffController::blush() {
+    face->morph(Happy);
+    isBlushing = true;
+}
+
+void AwuffController::next() {
+    currentFace++;
+    selectFace(faces[currentFace % 5]);
 }
