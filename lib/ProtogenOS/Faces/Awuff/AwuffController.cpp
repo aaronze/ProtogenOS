@@ -10,6 +10,8 @@ auto Red = std::make_shared<SolidMaterial>(0xFF0000);
 auto Rainbow = std::make_shared<RainbowSpiral>(0.8f, Vector2D(10.0f, 10.0f), 1.0f, 0.004f);
 
 void AwuffController::update(unsigned long delta) {
+    fanController.setSpeed(fanSpeed);
+
     if (blinkCooldown == 0 && rand() % 100 == 1) {
         face->morph(Morph::Blink, 1.0f);
         blinkCooldown = 30;
@@ -32,9 +34,9 @@ void AwuffController::update(unsigned long delta) {
 
     bool hasInput = input->update();
     if (hasInput) {
-        if (!handleMenu()) {
+//        if (!handleMenu()) {
             selectFace(input->getCurrentValue());
-        }
+//        }
     }
 
     face->morph(Morph::HideBlush, isBlushing ? 0.0f : 1.0f, true);
@@ -53,7 +55,6 @@ void AwuffController::selectFace(short index) {
         case 1:  angry();       break; // [A]ngry
         case 2: blush();        break; // [B]lush
         case 5:  next();        break; // N[e]xt
-        case 9: fan();          break;
 //        case 8:  happy();       break; // [H]appy
         case 12: love();        break; // [L]ove
         case 14: angry();       break; // Angry backup

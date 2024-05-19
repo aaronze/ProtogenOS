@@ -9,11 +9,11 @@ private:
     long previousMillis;
     short inputCount;
     short inputStream[4]{};
-    short pin;
+    unsigned short pin;
     short currentValue;
 
 public:
-    explicit ButtonHandler(short pin);
+    explicit ButtonHandler(unsigned short pin);
 
     bool update() override;
     short getCurrentValue() override;

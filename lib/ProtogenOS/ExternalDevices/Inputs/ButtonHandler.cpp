@@ -1,6 +1,6 @@
 #include "ButtonHandler.h"
 
-ButtonHandler::ButtonHandler(short pin) {
+ButtonHandler::ButtonHandler(unsigned short pin) {
     this->pin = pin;
     pinMode(pin, INPUT_PULLUP);
 
