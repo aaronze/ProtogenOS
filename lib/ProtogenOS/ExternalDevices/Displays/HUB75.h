@@ -29,7 +29,8 @@ public:
     uint16_t height() override;
 
     void setPixel(uint16_t x, uint16_t y, uint32_t color) override;
-    void drawString(uint16_t x, uint16_t y, uint32_t color, std::string string) override;
+    void drawString(uint16_t x, uint16_t y, uint32_t color, const std::string& string) override;
+    uint16_t getStringWidth(const std::string& string) override;
     void clear() override;
     void fill(uint32_t color) override;
 };

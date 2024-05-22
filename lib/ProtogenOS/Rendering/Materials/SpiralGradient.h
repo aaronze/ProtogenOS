@@ -36,6 +36,11 @@ public:
 
     void update(unsigned long delta) override {
         angle += rotationSpeed * float(delta) / 30.0f;
-        if (angle > M_PI * 2.0f) angle -= M_PI * 2.0f;
+        if (angle > M_PI / 2.0f) {
+            rotationSpeed = -rotationSpeed;
+        }
+        if (angle < 0) {
+            rotationSpeed = -rotationSpeed;
+        }
     }
 };

@@ -13,6 +13,7 @@ enum Morph {
     Frown,
     HideBlush,
     Sad,
+    Happy,
 };
 
 class IFace : public Object {
@@ -115,7 +116,10 @@ public:
         }
     }
 
-    void morph(Morph morph, float weight = 1.0f) {
+    void morph(Morph morph, float weight = 1.0f, bool instant = false) {
+        if (instant) {
+            morphWeights[morph] = weight;
+        }
         morphTargets[morph] = weight;
     }
 

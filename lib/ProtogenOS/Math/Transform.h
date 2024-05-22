@@ -12,6 +12,10 @@ private:
     Quaternion rotation = {1.0f, 0.0f, 0.0f, 0.0f};
 
 public:
+    static Transform identity() {
+        return {};
+    }
+
     void setOrigin(Vector3D origin) {
         this->origin = origin;
     }
