@@ -10,7 +10,6 @@ private:
     unsigned long blinkCooldown = 30;
     bool isBooped = false;
     bool isBlushing = false;
-    std::shared_ptr<IMaterial> currentMaterial;
     short currentFace = 0;
     short faces[5] = {8, 1, 12, 15, 19};
 
@@ -30,7 +29,6 @@ public:
     AwuffController(std::shared_ptr<IFace>& face, std::shared_ptr<IPanel>& panel, std::shared_ptr<IInput>& input)
         : IController(face, panel, input), fanController(Teensy::getPin(ExternalDevice::FanController)) {
         BoopSensor::begin(5);
-        currentMaterial = face->getMaterial();
     }
 
     void update(unsigned long delta) override;

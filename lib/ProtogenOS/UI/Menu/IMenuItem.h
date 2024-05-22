@@ -3,8 +3,8 @@
 #include <string>
 #include "EEPROM.h"
 
-class IMenuItem {
-private:
+class IMenuItem : public IUI {
+protected:
     int index;
     std::string text;
     uint8_t value;

@@ -6,6 +6,8 @@
 #include "IFace.h"
 #include "Rendering/Effects/IEffect.h"
 #include "Rendering/Scene.h"
+#include "Rendering/Materials/RainbowSpiral.h"
+#include "Rendering/Materials/SolidMaterial.h"
 #include "Rendering/Renderer.h"
 #include "Scenes/Menu.h"
 
@@ -22,6 +24,19 @@ protected:
     std::shared_ptr<Camera> camera;
     std::shared_ptr<Menu> menu;
     std::vector<std::shared_ptr<IEffect>> effects;
+
+    std::shared_ptr<SolidMaterial> Red = std::make_shared<SolidMaterial>(0xFF0000);
+    std::shared_ptr<SolidMaterial> Green = std::make_shared<SolidMaterial>(0x00FF00);
+    std::shared_ptr<SolidMaterial> Blue = std::make_shared<SolidMaterial>(0x0000FF);
+    std::shared_ptr<SolidMaterial> Purple = std::make_shared<SolidMaterial>(0xFF00FF);
+    std::shared_ptr<SolidMaterial> Orange = std::make_shared<SolidMaterial>(0xFFFF00);
+    std::shared_ptr<SolidMaterial> Cyan = std::make_shared<SolidMaterial>(0x00FFFF);
+    std::shared_ptr<SolidMaterial> White = std::make_shared<SolidMaterial>(0xFFFFFF);
+    std::shared_ptr<RainbowSpiral> Rainbow = std::make_shared<RainbowSpiral>(0.8f, Vector2D(10.0f, 10.0f), 1.0f, 0.004f);
+    std::shared_ptr<IMaterial> FaceMaterials[10] = {
+            Red, Green, Blue, Purple, Orange, Cyan, White, Rainbow, Rainbow, Rainbow
+    };
+    std::shared_ptr<IMaterial> currentMaterial;
 
     void showMenu() {
         scene = menu;
@@ -44,11 +59,19 @@ public:
         camera = std::make_shared<Camera>();
         renderer = std::make_shared<Renderer>();
         menu = std::make_shared<Menu>(scene);
+        face->setMaterial(FaceMaterials[menu->getMenuValue(Menus::Color)]);
+        currentMaterial = face->getMaterial();
     }
 
     virtual ~IController() = default;
 
     virtual void update(unsigned long delta) {
+        auto material = FaceMaterials[menu->getMenuValue(Menus::Color)];
+        if (currentMaterial != material) {
+            face->blendMaterial(material);
+            currentMaterial = material;
+        }
+
         if (menuCooldown > 0.0f) {
             menuCooldown -= float(delta) / 1000.0f;
             if (menuCooldown < 0) {
@@ -110,7 +133,10 @@ public:
 
         if (scene == menu) {
             switch(command) {
-                case 20: toggleMenu(); return true;
+                case 5: menu->nextOption(); return true; // Short Press
+                case 9: menu->prevOption(); return true; // Double Short Press
+                case 13: toggleMenu(); return true; // Double Long Press (Exit Menu)
+                case 20: menu->nextMenu(); return true; // Long Press
             }
         } else if (command == 20) {
             toggleMenu();

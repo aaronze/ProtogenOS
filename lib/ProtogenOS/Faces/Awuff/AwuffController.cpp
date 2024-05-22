@@ -2,12 +2,6 @@
 
 #include "Rendering/Effects/Crying.h"
 #include "Rendering/Effects/HeartBubbles.h"
-#include "Rendering/Materials/SolidMaterial.h"
-#include "Rendering/Materials/RainbowSpiral.h"
-
-auto Purple = std::make_shared<SolidMaterial>(0xFF00FF);
-auto Red = std::make_shared<SolidMaterial>(0xFF0000);
-auto Rainbow = std::make_shared<RainbowSpiral>(0.8f, Vector2D(10.0f, 10.0f), 1.0f, 0.004f);
 
 void AwuffController::update(unsigned long delta) {
     fanController.setSpeed(fanSpeed);
@@ -34,9 +28,9 @@ void AwuffController::update(unsigned long delta) {
 
     bool hasInput = input->update();
     if (hasInput) {
-//        if (!handleMenu()) {
+        if (!handleMenu()) {
             selectFace(input->getCurrentValue());
-//        }
+        }
     }
 
     face->morph(Morph::HideBlush, isBlushing ? 0.0f : 1.0f, true);
@@ -47,7 +41,6 @@ void AwuffController::selectFace(short index) {
     clearEffects();
 
     face->reset();
-    currentMaterial = Purple;
     face->blendMaterial(currentMaterial);
     isBlushing = false;
 
@@ -65,8 +58,7 @@ void AwuffController::selectFace(short index) {
 }
 
 void AwuffController::angry() {
-    currentMaterial = Red;
-    face->blendMaterial(currentMaterial);
+    face->blendMaterial(Red);
     face->morph(Anger);
 }
 

@@ -23,8 +23,8 @@ public:
         objects.clear();
     }
 
-    void addObject(const std::shared_ptr<Object>& obj) {
-        objects.push_back(obj);
+    void addObject(std::shared_ptr<Object> obj) {
+        objects.push_back(std::move(obj));
     }
 
     void removeObject(const std::shared_ptr<Object>& obj) {

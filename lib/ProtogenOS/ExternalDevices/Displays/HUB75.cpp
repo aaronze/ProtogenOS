@@ -47,7 +47,7 @@ void HUB75::clear() {
     backgroundLayer.fillScreen(colorToRGB(0));
 }
 
-void HUB75::drawString(uint16_t x, uint16_t y, uint32_t color, std::string string) {
+void HUB75::drawString(uint16_t x, uint16_t y, uint32_t color, const std::string& string) {
     for (size_t i = 0; i < string.length(); i++) {
         if (string[i] == ' ') {
             x += 3;
@@ -68,4 +68,22 @@ void HUB75::drawString(uint16_t x, uint16_t y, uint32_t color, std::string strin
         }
         x += width + 1;
     }
+}
+
+uint16_t HUB75::getStringWidth(const std::string& string) {
+    uint16_t width = 0;
+
+    for (size_t i = 0; i < string.length(); i++) {
+        switch (string[i]) {
+            case 'W':
+            case 'M':
+                width += 5;
+            default:
+                width += 3;
+        }
+    }
+
+    width += string.length() - 1;
+
+    return width;
 }
