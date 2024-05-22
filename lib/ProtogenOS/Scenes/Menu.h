@@ -7,6 +7,7 @@
 
 enum class Menus {
     Color,
+    FanSpeed,
 };
 
 class Menu : public Scene {
@@ -22,7 +23,8 @@ public:
     explicit Menu(std::shared_ptr<Scene> preview) : preview(std::move(preview)) {
         animation = std::make_unique<Tween>(transform);
 
-        menuItems.push_back(std::make_shared<NumberPicker>(0, "COLOR", 9));
+        menuItems.push_back(std::make_shared<NumberPicker>(int(Menus::Color), "COLOR", 9));
+        menuItems.push_back(std::make_shared<NumberPicker>(int(Menus::FanSpeed), "FAN SPEED", 4));
     }
 
     void showMenu(float duration = 0.5f) {

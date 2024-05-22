@@ -2,8 +2,6 @@
 
 #include "Faces/IController.h"
 #include "ExternalDevices/Sensors/BoopSensor.h"
-#include "ExternalDevices/Outputs/FanController.h"
-#include "ExternalDevices/Teensy.h"
 
 class AwuffController : public IController {
 private:
@@ -22,12 +20,8 @@ private:
     void blush();
     void next();
 
-    FanController fanController;
-    float fanSpeed = 0.5f;
-
 public:
-    AwuffController(std::shared_ptr<IFace>& face, std::shared_ptr<IPanel>& panel, std::shared_ptr<IInput>& input)
-        : IController(face, panel, input), fanController(Teensy::getPin(ExternalDevice::FanController)) {
+    AwuffController(std::shared_ptr<IFace>& face, std::shared_ptr<IPanel>& panel, std::shared_ptr<IInput>& input) : IController(face, panel, input) {
         BoopSensor::begin(5);
     }
 

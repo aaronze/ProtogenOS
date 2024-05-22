@@ -3,6 +3,8 @@
 #include <vector>
 #include "ExternalDevices/Displays/IPanel.h"
 #include "ExternalDevices/Inputs/IInput.h"
+#include "ExternalDevices/Outputs/FanController.h"
+#include "ExternalDevices/Teensy.h"
 #include "IFace.h"
 #include "Rendering/Effects/IEffect.h"
 #include "Rendering/Scene.h"
@@ -38,6 +40,8 @@ protected:
     };
     std::shared_ptr<IMaterial> currentMaterial;
 
+    std::unique_ptr<FanController> fanController;
+
     void showMenu() {
         scene = menu;
         menu->showMenu(0.5f);
@@ -61,6 +65,10 @@ public:
         menu = std::make_shared<Menu>(scene);
         face->setMaterial(FaceMaterials[menu->getMenuValue(Menus::Color)]);
         currentMaterial = face->getMaterial();
+
+        if (Teensy::hasPin(ExternalDevice::FanController)) {
+            fanController = std::make_unique<FanController>(Teensy::getPin(ExternalDevice::FanController));
+        }
     }
 
     virtual ~IController() = default;
@@ -70,6 +78,10 @@ public:
         if (currentMaterial != material) {
             face->blendMaterial(material);
             currentMaterial = material;
+        }
+
+        if (fanController) {
+            fanController->setPWM(menu->getMenuValue(Menus::FanSpeed) * 64);
         }
 
         if (menuCooldown > 0.0f) {

@@ -4,8 +4,6 @@
 #include "Rendering/Effects/HeartBubbles.h"
 
 void AwuffController::update(unsigned long delta) {
-    fanController.setSpeed(fanSpeed);
-
     if (blinkCooldown == 0 && rand() % 100 == 1) {
         face->morph(Morph::Blink, 1.0f);
         blinkCooldown = 30;
