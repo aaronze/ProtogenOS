@@ -16,7 +16,7 @@ public:
         importTransform.setScale(Vector3D(1.0f / 32, 1.0f / 16, 1.0f / 16));
         importTransform.apply(vertexList);
 
-        auto material = std::make_shared<SolidMaterial>(0xCC0000);
+        auto material = std::make_shared<SolidMaterial>(0xAA0000);
         setMaterial(std::move(material));
 
         auto mesh = std::make_shared<Mesh>(vertexList, indexList);
