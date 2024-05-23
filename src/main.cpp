@@ -1,6 +1,10 @@
 #include <Arduino.h>
 #include "Faces/Awuff/AwuffController.h"
 #include "Faces/Awuff/AwuffFace.h"
+#include "Faces/Nukude/NukudeController.h"
+#include "Faces/Nukude/NukudeFace.h"
+#include "Faces/Testing/LEDPowerController.h"
+#include "Faces/Testing/LEDPowerFace.h"
 #include "ExternalDevices/Displays/HUB75.h"
 #include "ExternalDevices/Inputs/ButtonHandler.h"
 #include "ExternalDevices/Teensy.h"
@@ -14,15 +18,20 @@ void setup() {
 
     previousMillis = millis();
 
-    std::shared_ptr<IFace> face = std::make_shared<AwuffFace>();
-    std::shared_ptr<IPanel> panel = std::make_shared<HUB75>(255);
-    std::shared_ptr<IInput> input = std::make_shared<ButtonHandler>(Teensy::getPin(ExternalDevice::Button));
-    controller = std::make_shared<AwuffController>(face, panel, input);
+//    std::shared_ptr<IFace> face = std::make_shared<AwuffFace>();
+//    std::shared_ptr<IPanel> panel = std::make_shared<HUB75>(255);
+//    std::shared_ptr<IInput> input = std::make_shared<ButtonHandler>(Teensy::getPin(ExternalDevice::Button));
+//    controller = std::make_shared<AwuffController>(face, panel, input);
 
 //    std::shared_ptr<IFace> face = std::make_shared<NukudeFace>();
 //    std::shared_ptr<IPanel> panel = std::make_shared<HUB75>(120);
 //    std::shared_ptr<IInput> input = std::make_shared<ButtonHandler>(23);
 //    controller = std::make_shared<NukudeController>(face, panel, input);
+
+    std::shared_ptr<IFace> face = std::make_shared<LEDPowerFace>(64, 32);
+    std::shared_ptr<IPanel> panel = std::make_shared<HUB75>(230);
+    std::shared_ptr<IInput> input = std::make_shared<ButtonHandler>(23);
+    controller = std::make_shared<LEDPowerController>(face, panel, input);
 }
 
 void loop() {
