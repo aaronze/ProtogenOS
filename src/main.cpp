@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include "Faces/Awuff/AwuffController.h"
 #include "Faces/Awuff/AwuffFace.h"
+#include "Faces/Nukude/NukudeController.h"
+#include "Faces/Nukude/NukudeFace.h"
 #include "ExternalDevices/Displays/HUB75.h"
 #include "ExternalDevices/Inputs/ButtonHandler.h"
 #include "ExternalDevices/Teensy.h"

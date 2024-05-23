@@ -1,8 +1,8 @@
 #include "Mesh.h"
 
 Mesh::Mesh(std::vector<float>& vertices, std::vector<unsigned int>& indexes) {
-    Vector3D minCorner;
-    Vector3D maxCorner;
+    Vector3D minCorner = Vector3D(999999, 999999, 999999);
+    Vector3D maxCorner = Vector3D(-999999, -999999, -999999);
 
     for (size_t i = 0; i < vertices.size(); i+=3) {
         Vector3D vector = Vector3D(vertices[i], vertices[i+1], vertices[i+2]);
