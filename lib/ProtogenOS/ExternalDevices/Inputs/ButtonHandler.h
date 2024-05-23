@@ -13,7 +13,7 @@ private:
     short currentValue;
 
 public:
-    explicit ButtonHandler(unsigned short pin);
+    explicit ButtonHandler();
 
     bool update() override;
     short getCurrentValue() override;

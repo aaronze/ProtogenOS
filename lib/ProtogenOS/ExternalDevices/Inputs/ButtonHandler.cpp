@@ -1,8 +1,9 @@
 #include <algorithm>
 #include "ButtonHandler.h"
+#include "ExternalDevices/Teensy.h"
 
-ButtonHandler::ButtonHandler(unsigned short pin) {
-    this->pin = pin;
+ButtonHandler::ButtonHandler() {
+    pin = Teensy::getPin(ExternalDevice::Button);
     pinMode(pin, INPUT_PULLUP);
 
     previousMillis = millis();

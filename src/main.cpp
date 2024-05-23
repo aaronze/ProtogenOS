@@ -18,12 +18,12 @@ void setup() {
 
     std::shared_ptr<IFace> face = std::make_shared<AwuffFace>();
     std::shared_ptr<IPanel> panel = std::make_shared<HUB75>(255);
-    std::shared_ptr<IInput> input = std::make_shared<ButtonHandler>(Teensy::getPin(ExternalDevice::Button));
+    std::shared_ptr<IInput> input = std::make_shared<ButtonHandler>();
     controller = std::make_shared<AwuffController>(face, panel, input);
 
 //    std::shared_ptr<IFace> face = std::make_shared<NukudeFace>();
 //    std::shared_ptr<IPanel> panel = std::make_shared<HUB75>(120);
-//    std::shared_ptr<IInput> input = std::make_shared<ButtonHandler>(23);
+//    std::shared_ptr<IInput> input = std::make_shared<ButtonHandler>();
 //    controller = std::make_shared<NukudeController>(face, panel, input);
 }
 
