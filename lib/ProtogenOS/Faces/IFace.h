@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include <unordered_map>
 #include "Math/Transform.h"
 #include "Rendering/Object.h"
 #include "Rendering/Materials/BlendMaterial.h"

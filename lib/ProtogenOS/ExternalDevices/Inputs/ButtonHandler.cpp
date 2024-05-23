@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "ButtonHandler.h"
 
 ButtonHandler::ButtonHandler(unsigned short pin) {
