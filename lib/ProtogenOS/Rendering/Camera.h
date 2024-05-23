@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Math/Transform.h"
 #include "Math/Vector3D.h"
 
 enum class CameraType {

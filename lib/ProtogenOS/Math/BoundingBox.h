@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math.h>
+#include <cmath>
 #include <algorithm>
 #include "Vector3D.h"
 #include "Transform.h"
@@ -11,9 +11,9 @@ private:
     Vector3D curMinCorner, curMaxCorner;
 
 public:
-    BoundingBox(const Vector3D &min, const Vector3D &max) : minCorner(min), maxCorner(max) {}
+    BoundingBox(const Vector3D& min, const Vector3D& max) : minCorner(min), maxCorner(max) {}
 
-    bool intersects(const Vector3D &rayOrigin, const Vector3D &rayDirection) const {
+    bool intersects(const Vector3D& rayOrigin, const Vector3D& rayDirection) const {
         float tmin = (curMinCorner.x - rayOrigin.x) / rayDirection.x;
         float tmax = (curMaxCorner.x - rayOrigin.x) / rayDirection.x;
         if (tmin > tmax) std::swap(tmin, tmax);
@@ -34,8 +34,8 @@ public:
         return !((tmin > tzmax) || (tzmin > tmax));
     }
 
-    void applyTransform(Transform* transform) {
-        curMinCorner = transform->transform(minCorner);
-        curMaxCorner = transform->transform(maxCorner);
+    void applyTransform(const Transform& transform) {
+        curMinCorner = transform.transform(minCorner);
+        curMaxCorner = transform.transform(maxCorner);
     }
 };

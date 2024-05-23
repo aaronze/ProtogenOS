@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::vector<float> vertices, std::vector<unsigned int> indexes) {
+Mesh::Mesh(std::vector<float>& vertices, std::vector<unsigned int>& indexes) {
     Vector3D minCorner;
     Vector3D maxCorner;
 
@@ -16,7 +16,7 @@ Mesh::Mesh(std::vector<float> vertices, std::vector<unsigned int> indexes) {
         if (vector.y > maxCorner.y) maxCorner.y = vector.y;
         if (vector.z > maxCorner.z) maxCorner.z = vector.z;
     }
-    this->boundingBox = new BoundingBox(minCorner, maxCorner);
+    this->boundingBox = std::make_unique<BoundingBox>(minCorner, maxCorner);
 
     for (size_t i = 0; i < indexes.size(); i+=3) {
         TrianglePtr triangle = std::make_shared<Triangle>(
@@ -30,11 +30,7 @@ Mesh::Mesh(std::vector<float> vertices, std::vector<unsigned int> indexes) {
     this->indexes = std::move(indexes);
 }
 
-Mesh::~Mesh() {
-    delete boundingBox;
-}
-
-Vector3D Mesh::calculateCenter(float *vertices, size_t size) {
+Vector3D Mesh::calculateCenter(float* vertices, size_t size) {
     Vector3D min;
     Vector3D max;
     for (size_t i = 0; i < size; i+=3) {
@@ -60,23 +56,23 @@ void Mesh::reset() {
     }
 }
 
-void Mesh::applyTransform(Transform& transform) {
-    boundingBox->applyTransform(&transform);
+void Mesh::applyTransform(const Transform& transform) {
+    boundingBox->applyTransform(transform);
     for (auto& vertex : vertices) {
         transform.apply(vertex);
     }
 }
 
-std::vector<TrianglePtr> Mesh::getTriangles() {
-    return triangles;
-}
-
-BoundingBox* Mesh::getBoundingBox() {
-    return boundingBox;
-}
-
-void Mesh::applyMorph(std::vector<unsigned int> morphIndexes, std::vector<float> morphVertices, float weight) {
+void Mesh::applyMorph(const std::vector<unsigned int>& morphIndexes, const std::vector<float>& morphVertices, float weight) {
     for (size_t i = 0; i < morphIndexes.size(); i++) {
         vertices[morphIndexes[i]].add(morphVertices[i*3] * weight, morphVertices[i*3+1] * weight, morphVertices[i*3+2] * weight);
     }
+}
+
+const std::vector<TrianglePtr>& Mesh::getTriangles() const {
+    return triangles;
+}
+
+const std::unique_ptr<BoundingBox>& Mesh::getBoundingBox() const {
+    return boundingBox;
 }

@@ -17,5 +17,5 @@ public:
 
     Triangle(Vector3D* v1, Vector3D* v2, Vector3D* v3);
 
-    bool intersects(Vector3D rayOrigin, Vector3D rayDirection, Vector3D* outIntersection, Vector2D* outColor) const;
+    bool intersects(const Vector3D& rayOrigin, const Vector3D& rayDirection, Vector3D* outIntersection, Vector2D* outColor) const;
 };

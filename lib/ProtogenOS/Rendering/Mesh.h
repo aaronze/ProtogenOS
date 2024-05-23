@@ -15,18 +15,16 @@ private:
     std::vector<unsigned int> indexes;
     std::vector<TrianglePtr> triangles;
     std::vector<Vector3D> vertices;
-    BoundingBox* boundingBox;
+    std::unique_ptr<BoundingBox> boundingBox;
 
 public:
-    Mesh() = default;
-    Mesh(std::vector<float> vertices, std::vector<unsigned int> indexes);
-    ~Mesh();
+    Mesh(std::vector<float>& vertices, std::vector<unsigned int>& indexes);
 
-    static Vector3D calculateCenter(float vertices[], size_t size);
+    static Vector3D calculateCenter(float* vertices, size_t size);
 
     void reset();
-    void applyTransform(Transform& transform);
-    void applyMorph(std::vector<unsigned int> indexes, std::vector<float> morphVertices, float weight);
-    std::vector<TrianglePtr> getTriangles();
-    BoundingBox* getBoundingBox();
+    void applyTransform(const Transform& transform);
+    void applyMorph(const std::vector<unsigned int>& indexes, const std::vector<float>& morphVertices, float weight);
+    const std::vector<TrianglePtr>& getTriangles() const;
+    const std::unique_ptr<BoundingBox>& getBoundingBox() const;
 };

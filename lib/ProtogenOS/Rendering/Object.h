@@ -23,11 +23,11 @@ public:
     }
 
     virtual void setMaterial(std::shared_ptr<IMaterial> material);
-    std::shared_ptr<IMaterial> getMaterial() const;
+    const std::shared_ptr<IMaterial>& getMaterial() const;
 
     void setMesh(std::shared_ptr<Mesh> mesh);
-    std::shared_ptr<Mesh> getMesh() const;
+    const std::shared_ptr<Mesh>& getMesh() const;
 
-    void setTransform(Transform transform);
+    void setTransform(Transform& transform);
     Transform& getTransform();
 };
