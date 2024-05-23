@@ -4,6 +4,9 @@
 #include "Renderer.h"
 
 void Renderer::render(std::shared_ptr<Scene>& scene, std::shared_ptr<IPanel>& panel, std::shared_ptr<Camera>& camera) {
+    Vector3D intersection;
+    Vector2D color;
+
     auto objects = scene->getObjects();
     auto width = panel->width();
     auto height = panel->height();
@@ -27,8 +30,6 @@ void Renderer::render(std::shared_ptr<Scene>& scene, std::shared_ptr<IPanel>& pa
                 rayDirection = camera->forward;
             }
 
-            Vector3D intersection;
-            Vector2D color;
             for (auto& object : objects) {
                 if (!object->getMesh()->getBoundingBox()->intersects(rayOrigin, rayDirection)) continue;
 

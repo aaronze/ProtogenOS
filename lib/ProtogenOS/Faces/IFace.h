@@ -25,6 +25,8 @@ private:
     std::unordered_map<Morph, float> morphSpeeds;
 
     std::shared_ptr<BlendMaterial> currentBlend;
+    float blinkRate = 0.0;
+    unsigned int blinkCooldown = 0;
 
     Vector2D getWiggle(float amplitude = 2.0f) {
         auto xPeriod = 5.3f / amplitude;
@@ -78,9 +80,22 @@ protected:
 public:
     virtual ~IFace() = default;
 
+    void setBlinkRate(float blinkRate = 0.005f) {
+        this->blinkRate = blinkRate;
+    }
+
     void update(unsigned long delta) override {
         getMaterial()->update(delta);
         getMesh()->reset();
+
+        auto willBlink = blinkRate > 0.0f && float(rand()) / float(RAND_MAX) <= blinkRate;
+        if (blinkCooldown == 0 && willBlink) {
+            morph(Morph::Blink, 1.0f);
+            blinkCooldown = 30;
+        } else if (blinkCooldown > 0) {
+            if (blinkCooldown < 25) morph(Morph::Blink, 0.0f);
+            blinkCooldown--;
+        }
 
         for (const auto& morphTarget : morphTargets) {
             Morph morph = morphTarget.first;

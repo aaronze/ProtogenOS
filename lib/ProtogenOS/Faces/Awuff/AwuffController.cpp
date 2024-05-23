@@ -4,14 +4,6 @@
 #include "Rendering/Effects/HeartBubbles.h"
 
 void AwuffController::update(unsigned long delta) {
-    if (blinkCooldown == 0 && rand() % 100 == 1) {
-        face->morph(Morph::Blink, 1.0f);
-        blinkCooldown = 30;
-    } else if (blinkCooldown > 0) {
-        if (blinkCooldown < 25) face->morph(Morph::Blink, 0.0f);
-        blinkCooldown--;
-    }
-
     if (BoopSensor::isBooped()) {
         face->blendMaterial(Rainbow);
         face->morph(Morph::Happy);

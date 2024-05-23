@@ -4,7 +4,7 @@ void Object::setMaterial(std::shared_ptr<IMaterial> material) {
     this->material = std::move(material);
 }
 
-std::shared_ptr<IMaterial> Object::getMaterial() const {
+const std::shared_ptr<IMaterial>& Object::getMaterial() const {
     return material;
 }
 
@@ -12,11 +12,11 @@ void Object::setMesh(std::shared_ptr<Mesh> mesh) {
     this->mesh = std::move(mesh);
 }
 
-std::shared_ptr<Mesh> Object::getMesh() const {
+const std::shared_ptr<Mesh>& Object::getMesh() const {
     return mesh;
 }
 
-void Object::setTransform(Transform transform) {
+void Object::setTransform(Transform& transform) {
     this->transform = transform;
 }
 

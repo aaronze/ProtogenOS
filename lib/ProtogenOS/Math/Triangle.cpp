@@ -12,7 +12,7 @@ Triangle::Triangle(Vector3D* v1, Vector3D* v2, Vector3D* v3) {
     this->uv3 = {0, 1};
 }
 
-bool Triangle::intersects(Vector3D rayOrigin, Vector3D rayDirection, Vector3D *outIntersection, Vector2D *outColor) const {
+bool Triangle::intersects(const Vector3D& rayOrigin, const Vector3D& rayDirection, Vector3D* outIntersection, Vector2D* outColor) const {
     float edge1X = v2->x - v1->x;
     float edge1Y = v2->y - v1->y;
     float edge1Z = v2->z - v1->z;
