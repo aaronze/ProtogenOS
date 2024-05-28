@@ -23,12 +23,13 @@ public:
             float x = -1.0f + (2.0f / numberOfHearts) * i;
             float startX = x + (std::rand() % 4) / 32.0f;
             float startY = 4.0f - (std::rand() % 40) / 16.0f;
+            float startZ = -10.0f;
 
             auto heart = std::make_shared<Heart>();
             hearts.push_back(heart);
 
             auto tween = std::make_shared<Tween>(heart->getTransform());
-            tween->addKeyFrame(KeyFrame::fromMove(startX, startY), 0.0f, 0.0f);
+            tween->addKeyFrame(KeyFrame::fromMove(startX, startY, startZ), 0.0f, 0.0f);
             tween->addKeyFrame(KeyFrame::fromScale(0.16f, 0.16f, 1.0f), 0.0f, 0.0f);
             tween->addKeyFrame(KeyFrame::fromMove(0.0f, -(float(std::rand() % 7) + 7.0f)), 0.0f, duration);
 

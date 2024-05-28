@@ -10,6 +10,7 @@ public:
     float x, y, z;
 
     float length() const;
+    float lengthSquared() const;
     Vector2D xy() const;
     Vector3D normalize();
     Vector3D cross(const Vector3D& vector) const;

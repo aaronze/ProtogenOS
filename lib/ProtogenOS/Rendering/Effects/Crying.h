@@ -19,7 +19,7 @@ public:
 
         for (unsigned int i = 0; i < numberOfTears; i++) {
             auto tear = std::make_shared<Tear>();
-            tear->getTransform().setPosition(Vector3D(target.x + (std::rand() % 10 - 5) / 32.0f, target.y + (std::rand() % 10 - 5) / 16.0f, 0));
+            tear->getTransform().setPosition(Vector3D(target.x + (std::rand() % 10 - 5) / 32.0f, target.y + (std::rand() % 10 - 5) / 16.0f, -10.0f));
             tears.push_back(tear);
         }
 

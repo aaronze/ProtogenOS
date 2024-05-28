@@ -11,7 +11,16 @@ private:
     Vector3D curMinCorner, curMaxCorner;
 
 public:
-    BoundingBox(const Vector3D& min, const Vector3D& max) : minCorner(min), maxCorner(max) {}
+    BoundingBox() = default;
+    BoundingBox(const Vector3D& min, const Vector3D& max) : minCorner(min), maxCorner(max), curMinCorner(min), curMaxCorner(max) {}
+
+    const Vector3D& min() const {
+        return curMinCorner;
+    }
+
+    const Vector3D& max() const {
+        return curMaxCorner;
+    }
 
     bool intersects(const Vector3D& rayOrigin, const Vector3D& rayDirection) const {
         float tmin = (curMinCorner.x - rayOrigin.x) / rayDirection.x;

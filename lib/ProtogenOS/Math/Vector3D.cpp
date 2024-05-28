@@ -1,8 +1,12 @@
+#include <cmath>
 #include "Vector3D.h"
-#include <math.h>
 
 float Vector3D::length() const {
     return sqrtf(x * x + y * y + z * z);
+}
+
+float Vector3D::lengthSquared() const {
+    return x * x + y * y + z * z;
 }
 
 Vector2D Vector3D::xy() const {
