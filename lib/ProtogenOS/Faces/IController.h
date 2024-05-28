@@ -61,7 +61,7 @@ public:
         scene->addObject(this->face);
 
         camera = std::make_shared<Camera>();
-        renderer = std::make_shared<Renderer>();
+        renderer = std::make_shared<Renderer>(panel->width(), panel->height());
         menu = std::make_shared<Menu>(scene);
         face->setMaterial(FaceMaterials[menu->getMenuValue(Menus::Color)]);
         currentMaterial = face->getMaterial();

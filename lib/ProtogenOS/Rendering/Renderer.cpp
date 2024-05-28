@@ -12,11 +12,9 @@ void Renderer::render(std::shared_ptr<Scene>& scene, std::shared_ptr<IPanel>& pa
     auto objects = scene->getObjects();
     auto width = panel->width();
     auto height = panel->height();
-    std::vector<float> depthBuffer;
-    depthBuffer.resize(width*height);
-    std::fill(depthBuffer.begin(), depthBuffer.end(), std::numeric_limits<float>::max());
 
     panel->clear();
+    depthBuffer.clear();
 
     BoundingVolume boundedVolume = BoundingVolume(objects);
     std::vector<std::shared_ptr<Object>> boundedObjects;
@@ -44,8 +42,8 @@ void Renderer::render(std::shared_ptr<Scene>& scene, std::shared_ptr<IPanel>& pa
                 for (auto& triangle: object->getMesh()->getTriangles()) {
                     if (triangle->intersects(rayOrigin, rayDirection, &intersection, &color)) {
                         auto distance = (intersection - rayOrigin).lengthSquared();
-                        if (distance > depthBuffer[y*width + x]) continue;
-                        depthBuffer[y*width + x] = distance;
+                        if (!depthBuffer.testDepth(x, y, distance)) continue;
+                        depthBuffer.setDepth(x, y, distance);
 
                         panel->setPixel(width - x - 1, y, object->getMaterial()->getColor(
                                 {nx * 2.0f - 1.0f, ny * 2.0f - 1.0f, 0}, triangle->normal, color));
