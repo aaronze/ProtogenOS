@@ -35,6 +35,15 @@ uint16_t HUB75::height() {
     return 32;
 }
 
+uint8_t HUB75::getBrightness() {
+    return brightness;
+}
+
+void HUB75::setBrightness(uint8_t newBrightness) {
+    brightness = newBrightness;
+    matrix.setBrightness(brightness);
+}
+
 void HUB75::setPixel(uint16_t x, uint16_t y, uint32_t color) {
     backgroundLayer.drawPixel(x, y, colorToRGB(color));
 }
