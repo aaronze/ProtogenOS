@@ -80,6 +80,11 @@ public:
             currentMaterial = material;
         }
 
+        uint8_t newBrightness = (menu->getMenuValue(Menus::Brightness) + 1) * 50;
+        if (newBrightness != panel->getBrightness()) {
+            panel->setBrightness(newBrightness);
+        }
+
         if (fanController) {
             fanController->setPWM(menu->getMenuValue(Menus::FanSpeed) * 64);
         }

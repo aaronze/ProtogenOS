@@ -7,6 +7,7 @@
 
 enum class Menus {
     Color,
+    Brightness,
     FanSpeed,
 };
 
@@ -24,6 +25,7 @@ public:
         animation = std::make_unique<Tween>(transform);
 
         menuItems.push_back(std::make_shared<NumberPicker>(int(Menus::Color), "COLOR", 9));
+        menuItems.push_back(std::make_shared<NumberPicker>(int(Menus::Brightness), "BRIGHTNESS", 4));
         menuItems.push_back(std::make_shared<NumberPicker>(int(Menus::FanSpeed), "FAN SPEED", 4));
     }
 
