@@ -28,6 +28,7 @@ private:
     std::shared_ptr<BlendMaterial> currentBlend;
     float blinkRate = 0.0;
     unsigned int blinkCooldown = 0;
+    float wiggleAmplitude = 2.0f;
 
     Vector2D getWiggle(float amplitude = 2.0f) {
         auto xPeriod = 5.3f / amplitude;
@@ -85,6 +86,10 @@ public:
         this->blinkRate = blinkRate;
     }
 
+    void setWiggleAmplitude(float wiggleAmplitude = 2.0f) {
+        this->wiggleAmplitude = wiggleAmplitude;
+    }
+
     void update(unsigned long delta) override {
         getMaterial()->update(delta);
         getMesh()->reset();
@@ -120,7 +125,7 @@ public:
             getMesh()->applyMorph(indexes, vertices, weight);
         }
 
-        auto wiggle = getWiggle();
+        auto wiggle = getWiggle(wiggleAmplitude);
         getTransform().setPosition({wiggle.x, wiggle.y, 0});
         getMesh()->applyTransform(getTransform());
     }

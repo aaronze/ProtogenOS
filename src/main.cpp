@@ -11,8 +11,9 @@ std::shared_ptr<IController> controller;
 unsigned long previousMillis;
 
 void setup() {
-    Teensy::setPin(ExternalDevice::Button, 23);
+    Teensy::setPin(ExternalDevice::Microphone, 14);
     Teensy::setPin(ExternalDevice::FanController, 15);
+    Teensy::setPin(ExternalDevice::Button, 23);
 
     previousMillis = millis();
 
