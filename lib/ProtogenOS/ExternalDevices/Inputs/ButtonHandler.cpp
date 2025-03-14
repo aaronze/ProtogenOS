@@ -64,7 +64,7 @@ bool ButtonHandler::update() {
 
     if (pinState == previousState) return false;
 
-    if (!pinState) {
+    if (!pinState && inputCount < 4) {
         inputStream[inputCount] = timeOn;
         inputCount += 1;
     }
