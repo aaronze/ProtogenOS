@@ -10,6 +10,7 @@ public:
     NumberPicker(int index, std::string text, uint8_t max) : IMenuItem(index, text), max(max) {}
 
     void setValue(uint8_t val) override {
+        if (val > max*2) val = max;
         IMenuItem::setValue(val % (max + 1));
     }
 
