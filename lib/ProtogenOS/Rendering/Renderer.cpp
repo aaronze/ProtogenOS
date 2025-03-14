@@ -45,10 +45,8 @@ void Renderer::render(std::shared_ptr<Scene>& scene, std::shared_ptr<IPanel>& pa
                         if (!depthBuffer.testDepth(x, y, distance)) continue;
                         depthBuffer.setDepth(x, y, distance);
 
-                        panel->setPixel(width - x - 1, y, object->getMaterial()->getColor(
-                                {nx * 2.0f - 1.0f, ny * 2.0f - 1.0f, 0}, triangle->normal, color));
-                        panel->setPixel(x, y + height, object->getMaterial()->getColor(
-                                {nx * 2.0f - 1.0f, ny * 2.0f - 1.0f, 0}, triangle->normal, color));
+                        panel->setPixel(width - x - 1, y, object->getMaterial()->getColor({nx, ny, 0}, triangle->normal, color));
+                        panel->setPixel(x, y + height, object->getMaterial()->getColor({nx, ny, 0}, triangle->normal, color));
                         break;
                     }
                 }

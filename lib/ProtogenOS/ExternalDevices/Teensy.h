@@ -5,6 +5,7 @@
 enum class ExternalDevice {
     Button,
     FanController,
+    Microphone,
 };
 
 class Teensy {
