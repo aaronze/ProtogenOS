@@ -15,7 +15,7 @@ ButtonHandler::ButtonHandler() {
 bool ButtonHandler::update() {
     bool pinState = !digitalRead(pin);
     long timeOn = millis() - previousMillis;
-    if (timeOn < 40) return false;
+    if (timeOn < 25) return false;
 
     if (!pinState && inputCount > 0 && timeOn > 500) {
         uint32_t mask = 0;
